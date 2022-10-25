@@ -1,3 +1,8 @@
+/* Tailwind configs */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;

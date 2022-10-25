@@ -1,5 +1,13 @@
-import { uIOhook, UiohookKeyboardEvent, UiohookMouseEvent } from 'uiohook-napi'
+import { uIOhook, UiohookKeyboardEvent, UiohookMouseEvent, UiohookKey } from 'uiohook-napi'
 import { appWindow } from '../windows/app'
+import { iohookValue, ResHookKeyboardEvent } from '../types/hookEvent'
+
+const parseKeyboardEvent = (e: UiohookKeyboardEvent) => {
+  return {
+    ...e,
+    keyName: iohookValue[e.keycode],
+  } as ResHookKeyboardEvent
+}
 
 export const initListener = (listen: {
   input?: boolean
@@ -20,10 +28,10 @@ export const initListener = (listen: {
   }
 
   if (listen.keydown) {
-    uIOhook.on('keydown', (e) => {
-      console.log(e)
+    uIOhook.on( 'keydown', (e) => {
+      UiohookKey
       if (appWindow) {
-        appWindow.webContents.send('keydown', e)
+        appWindow.webContents.send('keydown', parseKeyboardEvent(e))
       }
     })
   }

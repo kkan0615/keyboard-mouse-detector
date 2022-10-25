@@ -8,12 +8,13 @@ export const createAppWindow = async () => {
   // Create the browser window.
   appWindow = new BrowserWindow({
     autoHideMenuBar: true,
-    width: 1280,
+    width: 1280, // Change to 400 px
     height: 720,
+    useContentSize: true,
     webPreferences: {
-      contextIsolation: true,
       spellcheck: false,
-      nodeIntegration: true,
+      nodeIntegration: false,
+      contextIsolation: true,
       // Electron current directory will be at `dist/main`, we need to include
       // the preload script from this relative path: `../preload/index.cjs`.
       preload: path.join(__dirname, '../preload/index.cjs'),
