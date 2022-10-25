@@ -8,7 +8,6 @@ contextBridge.exposeInMainWorld('versions', {
 
 contextBridge.exposeInMainWorld('renderer', {
   send: () => <T = any>(channel: string, listener: (event: IpcRendererEvent, args?: T) => void) => ipcRenderer.send(channel, listener),
-  // on: () => ipcRenderer.on,
   on: <T = any>(channel: string, listener: (event: IpcRendererEvent, args?: T) => void) => ipcRenderer.on(channel, listener),
   off: () => (channel: string, listener: (event: IpcRendererEvent) => void) => ipcRenderer.off(channel, listener),
 })
