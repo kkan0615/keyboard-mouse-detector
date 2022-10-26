@@ -20,6 +20,18 @@ const Home = () => {
     }
   }, [])
 
+  const startRecord = () => {
+    electron.send('start-record')
+  }
+
+  const pauseRecord = () => {
+    electron.send('pause-record')
+  }
+
+  const stopRecord = () => {
+    electron.send('stop-record')
+  }
+
   return (
     <div
       className="tw-flex tw-flex-col"
@@ -28,11 +40,26 @@ const Home = () => {
       } }
     >
       <div>
-        Controller
+        <div>
+          <button
+            onClick={ startRecord }
+          >Start</button>
+        </div>
+        <div>
+          <button
+            onClick={ pauseRecord }
+          >Pause</button>
+        </div>
+        <div>
+          <button
+            onClick={ stopRecord }
+          >Stop</button>
+        </div>
       </div>
       <div>
         List
       </div>
+
     </div>
   )
 }

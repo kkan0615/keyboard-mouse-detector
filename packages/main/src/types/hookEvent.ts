@@ -1,4 +1,4 @@
-import { UiohookKeyboardEvent } from 'uiohook-napi'
+import { UiohookKeyboardEvent, UiohookMouseEvent, UiohookWheelEvent } from 'uiohook-napi'
 
 export const iohookValue: Record<string, string> = {
   '14': 'Backspace',
@@ -128,4 +128,16 @@ export const iohookValue: Record<string, string> = {
 
 export type ResHookKeyboardEvent = Omit<UiohookKeyboardEvent, 'time'> & {
   keyName : string
+  time: string
+}
+
+export type ResHookMouseEventType = 'clicked' | 'moved' | 'pressed' | 'released'
+
+export type ResHookMouseEvent = Omit<UiohookMouseEvent, 'time' | 'type'> & {
+  type: ResHookMouseEventType
+  time: string
+}
+
+export type ResHookWheelEvent = Omit<UiohookWheelEvent, 'time'> & {
+  time: string
 }

@@ -1,12 +1,11 @@
 // packages/main/src/index.ts
 import { app } from 'electron'
 import { createAppWindow } from './windows/app'
-import { uIOhook, UiohookKey } from 'uiohook-napi'
-import { initListener } from './services/keyListeners'
-const keyMap: Record<string, string> = {}
-// Object.keys(UiohookKey).map((key) => {
-//   keyMap[UiohookKey[key]] = key
-// })
+import { uIOhook } from 'uiohook-napi'
+import dayjs from 'dayjs'
+import LocalizedFormat from 'dayjs/plugin/LocalizedFormat'
+import { initIpcMain } from './services'
+
 
 const isSingleInstance = app.requestSingleInstanceLock()
 
@@ -40,7 +39,10 @@ app.on('before-quit', () => {
 app
   .whenReady()
   .then(async () => {
-    initListener({ keydown: true })
+    // Add Localized formats to dayjs
+    dayjs.extend(LocalizedFormat)
+    initIpcMain()
+
     await createAppWindow()
   })
   .catch((e) => console.error('Failed to create window:', e))
