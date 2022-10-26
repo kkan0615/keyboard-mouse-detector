@@ -1,7 +1,12 @@
 /** *********************
  *  @TODO
- *  현재 off 가 작동을 안하는중이여,
- *  on, off 에 들어갈 listener 함수 작업해야할 듯?
+ *  1. 현재 off 가 작동을 안하는중이여서, on, off 에 들어갈 listener 함수 작업해야할 듯?
+ *  2. 아래와 같은 것들이 mouse event 들어가는데 이것도 handling 해줘야 할 것 같음
+ *  아닌거 같기도 move up 등등 이벤트 다시 확인해보기
+ *   clicked
+ *   moved
+ *   pressed
+ *   released
  ***********************/
 
 import { uIOhook } from 'uiohook-napi'
