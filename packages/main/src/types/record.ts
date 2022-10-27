@@ -52,32 +52,49 @@ const parseWheelEvent = (e: UiohookWheelEvent) => {
 export class Record {
   private startTime = ''
   private endTime = ''
-  private status: 'IDLE' | 'PAUSE' = 'IDLE'
+  private status: 'IDLE' | 'RUNNING' | 'PAUSE' = 'IDLE'
   private events: (ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent)[] = []
 
   /**
    * Start to record
    */
   public start() {
-    this.resetTime()
-    this.startTime = dayjs().toISOString()
-    this.status = 'IDLE'
+    if (this.status === 'IDLE') {
+      this.reset()
+      this.startTime = dayjs().toISOString()
+      this.status = 'RUNNING'
+    }
   }
 
   /**
-   * Pause to record
+   * Pause to record <br>
+   * status should be RUNNING
    */
   public pause() {
-    this.endTime = dayjs().toISOString()
-    this.status = 'PAUSE'
+    if (this.status === 'RUNNING') {
+      this.endTime = dayjs().toISOString()
+      this.status = 'PAUSE'
+    }
+  }
+
+  /**
+   * Restart to record
+   */
+  public restart() {
+    if (this.status === 'PAUSE') {
+      this.endTime = ''
+      this.status = 'RUNNING'
+    }
   }
 
   /**
    * Stop recording
    */
   public stop() {
-    this.endTime = dayjs().toISOString()
-    this.status = 'IDLE'
+    if (this.status === 'PAUSE' || this.status === 'RUNNING') {
+      this.endTime = dayjs().toISOString()
+      this.status = 'IDLE'
+    }
   }
 
   /**
@@ -117,7 +134,7 @@ export class Record {
   /**
    *
    */
-  public resetTime() {
+  public reset() {
     this.startTime = ''
     this.endTime = ''
     this.events = []

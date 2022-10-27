@@ -8,7 +8,7 @@ const Home = () => {
 
   const keydownListener = (event: IpcRendererEvent, args?: ResHookKeyboardEvent) => {
     if (args) {
-      console.log('test...', args)
+      console.log('test...', args.keyName)
     }
   }
   //  Add keydown event listener
@@ -22,6 +22,10 @@ const Home = () => {
 
   const startRecord = () => {
     electron.send('start-record')
+  }
+
+  const restartRecord = () => {
+    electron.send('restart-record')
   }
 
   const pauseRecord = () => {
@@ -49,6 +53,11 @@ const Home = () => {
           <button
             onClick={ pauseRecord }
           >Pause</button>
+        </div>
+        <div>
+          <button
+            onClick={ restartRecord }
+          >Restart</button>
         </div>
         <div>
           <button

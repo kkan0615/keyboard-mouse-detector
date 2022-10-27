@@ -1,11 +1,12 @@
 import { app, ipcMain } from 'electron'
 import electronStore from '../store'
 import { Setting } from '../types/setting'
-import { pauseRecord, startRecord, stopRecord } from './record'
+import { pauseRecord, restartRecord, startRecord, stopRecord } from '../services/record'
 
 export const initIpcMain = () => {
   ipcMain.on('start-record', startRecord)
   ipcMain.on('pause-record', pauseRecord)
+  ipcMain.on('restart-record', restartRecord)
   ipcMain.on('stop-record', stopRecord)
 
   ipcMain.on('get-setting', (event, args: Partial<Setting>) => {

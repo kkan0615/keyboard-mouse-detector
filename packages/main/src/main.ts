@@ -4,7 +4,7 @@ import { createAppWindow } from './windows/app'
 import { uIOhook } from 'uiohook-napi'
 import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/LocalizedFormat'
-import { initIpcMain } from './services'
+import { initIpcMain } from './listenrers'
 
 
 const isSingleInstance = app.requestSingleInstanceLock()

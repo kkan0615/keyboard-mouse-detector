@@ -1,49 +1,67 @@
 import { recordIns } from '../types/record'
-import electronStore from '../store'
-import { Setting } from '../types/setting'
+import { getSettingInStore } from '../store'
 import { app } from 'electron'
 import dayjs from 'dayjs'
 import fsp from 'fs/promises'
-import { initListener, offListener } from './keyListeners'
+import { initIoHookListeners } from '../listenrers/iohooks'
+import { uIOhook } from 'uiohook-napi'
 
+// Dayjs format for file name
 const fileNameDateFormat = 'YYYY-MM-DD-HH-mm-ss'
-const dateFormat = 'MMM Do YYYY, h:mm:ss a'
+// dayjs format for file content
+const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
 export const startRecord = () => {
   // Get setting from electron store
-  const setting = (electronStore.get('setting') || {}) as Setting
-  initListener({
+  const setting = getSettingInStore()
+  // initialize ioHooks
+  initIoHookListeners({
     input: setting.input,
-    keydown: true, // @test
+    keydown: setting.keydown,
     keyup: setting.keyup,
     mousedown: setting.mousedown,
-    mouseup: false, // @test
+    mouseup: setting.mouseup,
     mousemove: setting.mousemove,
     click: setting.click,
     wheel: setting.wheel,
   })
+  // start record
   recordIns.start()
 }
 
 export const pauseRecord = () => {
+  // Stop listening
+  uIOhook.stop()
+  uIOhook.removeAllListeners()
+  // Pause
   recordIns.pause()
+}
+
+export const restartRecord = () => {
+  // Get setting from electron store
+  const setting = getSettingInStore()
+  // initialize ioHooks
+  initIoHookListeners({
+    input: setting.input,
+    keydown: setting.keydown,
+    keyup: setting.keyup,
+    mousedown: setting.mousedown,
+    mouseup: setting.mouseup,
+    mousemove: setting.mousemove,
+    click: setting.click,
+    wheel: setting.wheel,
+  })
+  // restart record
+  recordIns.restart()
 }
 
 export const stopRecord = async () => {
   try {
     // Get setting from electron store
-    const setting = (electronStore.get('setting') || {}) as Setting
-    offListener({
-      input: setting.input,
-      keydown: true, // @test
-      keyup: setting.keyup,
-      mousedown: setting.mousedown,
-      mouseup: false, // @test
-      mousemove: setting.mousemove,
-      click: setting.click,
-      wheel: setting.wheel,
-    })
-
+    const setting = getSettingInStore()
+    // Stop listening
+    uIOhook.stop()
+    uIOhook.removeAllListeners()
     // If no download path, use download folder as a default folder
     const downloadPath = setting.downloadPath || app.getPath('downloads')
     // Stop record
@@ -61,7 +79,7 @@ export const stopRecord = async () => {
       // Add time stamp
       fileContent += `${dayjs(event.time).format(dateFormat)} - `
       if ('keyName' in event) {
-        fileContent += `${event.keyName} `
+        fileContent += `${event.keyName || event.keycode} `
       }
       if (event.ctrlKey) {
         fileContent += 'Ctrl '
@@ -84,7 +102,7 @@ export const stopRecord = async () => {
       if ('clicks' in event) {
         fileContent += `clicks: ${event.clicks} `
       }
-
+      // Add enter
       fileContent += '\n'
     })
 
@@ -92,5 +110,6 @@ export const stopRecord = async () => {
     await fsp.writeFile(`${downloadPath}/${fileName}.txt`, fileContent)
   } catch (e) {
     console.error(e)
+    throw e
   }
 }
