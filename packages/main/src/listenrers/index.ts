@@ -1,9 +1,10 @@
 import { app, ipcMain } from 'electron'
 import electronStore from '../store'
 import { Setting } from '../types/setting'
-import { pauseRecord, restartRecord, startRecord, stopRecord } from '../services/record'
+import { getRecordData, pauseRecord, restartRecord, startRecord, stopRecord } from '../services/record'
 
 export const initIpcMain = () => {
+  ipcMain.handle('get-record-data', getRecordData)
   ipcMain.on('start-record', startRecord)
   ipcMain.on('pause-record', pauseRecord)
   ipcMain.on('restart-record', restartRecord)

@@ -11,6 +11,13 @@ const fileNameDateFormat = 'YYYY-MM-DD-HH-mm-ss'
 // dayjs format for file content
 const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
+/**
+ * Get current record data
+ */
+export const getRecordData = () => {
+  return recordIns.toJson()
+}
+
 export const startRecord = () => {
   // Get setting from electron store
   const setting = getSettingInStore()
@@ -108,6 +115,8 @@ export const stopRecord = async () => {
 
     // Create a file
     await fsp.writeFile(`${downloadPath}/${fileName}.txt`, fileContent)
+    // Reset the data
+    recordIns.reset()
   } catch (e) {
     console.error(e)
     throw e

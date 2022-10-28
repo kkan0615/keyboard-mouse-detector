@@ -17,36 +17,48 @@ export const keydownCb = (e: UiohookKeyboardEvent) => {
 }
 
 export const keyupCb = (e: UiohookKeyboardEvent) => {
+  const event = recordIns.addKeyboardEvent(e)
+
   if (appWindow) {
-    appWindow.webContents.send('keyup', e)
+    appWindow.webContents.send('keyup', event)
   }
 }
 
 export const mousedownCb = (e: UiohookMouseEvent) => {
+  const event = recordIns.addMouseEvent(e)
+
   if (appWindow) {
-    appWindow.webContents.send('mousedown', e)
+    appWindow.webContents.send('mousedown', event)
   }
 }
 
 export const mouseupCb = (e: UiohookMouseEvent) => {
+  const event = recordIns.addMouseEvent(e)
+
   if (appWindow) {
-    appWindow.webContents.send('mouseup', e)
+    appWindow.webContents.send('mouseup', event)
   }
 }
 
 export const mousemoveCb = (e: UiohookMouseEvent) => {
+  const event = recordIns.addMouseEvent(e)
+
   if (appWindow) {
-    appWindow.webContents.send('mousemove', e)
+    appWindow.webContents.send('mousemove', event)
   }
 }
 export const clickCb = (e: UiohookMouseEvent) => {
+  const event = recordIns.addMouseEvent(e)
+
   if (appWindow) {
-    appWindow.webContents.send('click', e)
+    appWindow.webContents.send('click', event)
   }
 }
 
 export const wheelCb = (e: UiohookWheelEvent) => {
+  const event = recordIns.addWheelEvent(e)
+
   if (appWindow) {
-    appWindow.webContents.send('wheel', e)
+    appWindow.webContents.send('wheel', event)
   }
 }

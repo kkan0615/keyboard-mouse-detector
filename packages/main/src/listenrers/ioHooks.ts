@@ -20,8 +20,8 @@ export const initIoHookListeners = (listen: {
   click?: boolean
   wheel?: boolean
 }) => {
+  console.log(listen)
   // If events is exited
-  console.log(uIOhook.eventNames())
   if (uIOhook.eventNames().length) {
     uIOhook.removeAllListeners()
   }
