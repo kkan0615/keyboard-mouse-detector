@@ -94,7 +94,6 @@ export class Record {
     if (this.status === 'PAUSE' || this.status === 'RUNNING') {
       this.endTime = dayjs().toISOString()
       this.status = 'IDLE'
-      this.events = []
     }
   }
 

@@ -5,7 +5,7 @@ const electronStore = new ElectronStore()
 
 export const getSettingInStore = () => {
   return (electronStore.get('setting') || {
-    input: true,
+    input: false,
     keydown: true,
     keyup: true,
     mousedown: true,

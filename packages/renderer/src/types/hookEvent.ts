@@ -1,4 +1,13 @@
-import { UiohookKeyboardEvent, UiohookMouseEvent, UiohookWheelEvent } from 'uiohook-napi'
+import { UiohookMouseEvent } from 'uiohook-napi'
+
+export type hookEvents = 'input' |
+'keydown' |
+'keyup' |
+'mousedown' |
+'mouseup' |
+'mousemove' |
+'click' |
+'wheel'
 
 export const iohookValue: Record<string, string> = {
   '14': 'Backspace',
