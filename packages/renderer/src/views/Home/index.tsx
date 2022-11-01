@@ -1,11 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
+// import './index.scss'
+import { Icon } from '@iconify/react'
 import { useElectron } from '@/hooks/electron'
 import { hookEvents, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
 import { IpcRendererEvent } from 'electron'
 import { RecordData, RecordStatus } from '@/types/record'
 import Header from '@/views/Home/components/Header'
 import EventList from '@/views/Home/components/EventList'
+import StartBtn from '@/views/Home/components/StartBtn'
+import PauseBtn from '@/views/Home/components/PauseBtn'
+import StopBtn from '@/views/Home/components/StopBtn'
 
 const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
@@ -130,9 +135,23 @@ const Home = () => {
     >
       <Header />
       <div
-        className="tw-text-center"
+        className="tw-grow-shrink tw-text-center"
       >
-        <div>
+        { status === 'IDLE' ?
+          <StartBtn onClick={ startRecord } />: null
+        }
+        { status === 'RUNNING' ?
+          <PauseBtn onClick={ pauseRecord } /> : null
+        }
+        { status === 'PAUSE' ?
+          <StartBtn onClick={ restartRecord } />: null
+        }
+        { (status === 'RUNNING' || status === 'PAUSE') ?
+          <StopBtn onClick={ stopRecord } /> : null
+        }
+        <div
+          className="tw-grow "
+        >
           <div>
             { formatStartTime }
           </div>
@@ -143,36 +162,6 @@ const Home = () => {
             { formatEndTime }
           </div>
         </div>
-        { status === 'IDLE' &&
-          <div>
-            <button
-              onClick={ startRecord }
-            >Start</button>
-          </div>
-        }
-        { status === 'RUNNING' &&
-          <div>
-            <button
-              onClick={ pauseRecord }
-            >Pause</button>
-          </div>
-        }
-        { status === 'PAUSE' &&
-          <div>
-            <button
-              onClick={ restartRecord }
-            >Restart</button>
-          </div>
-        }
-        { (status === 'RUNNING' || status === 'PAUSE') &&
-          <div>
-            <button
-              onClick={ stopRecord }
-            >
-              Stop
-            </button>
-          </div>
-        }
       </div>
       <EventList events={ events } />
 
