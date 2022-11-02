@@ -11,7 +11,7 @@ const App = () => {
         System Menu bar
       </div>
       <div
-        className="tw-grow"
+        className="tw-grow tw-h-1"
       >
         <Outlet />
       </div>

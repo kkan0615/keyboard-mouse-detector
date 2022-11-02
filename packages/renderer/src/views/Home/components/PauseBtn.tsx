@@ -11,7 +11,7 @@ const PauseBtn = ({ onClick }: Props) => {
     >
       <button
         onClick={ onClick }
-        className="tw-w-full tw-h-full tw-ring tw-ring-[#0069FF] tw-rounded-full tw-text-[#0069FF] hover:tw-text-red-500"
+        className="tw-w-full tw-h-full tw-ring tw-ring-primary tw-rounded-full tw-text-primary hover:tw-text-red-500 hover:tw-ring-red-500 tw-p-8"
       >
         <Icon
           className="tw-w-full tw-h-full"

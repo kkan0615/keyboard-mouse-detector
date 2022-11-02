@@ -7,7 +7,9 @@ interface Props {
 
 const EventList = ({ events } : Props) => {
   return (
-    <div>
+    <div
+      className="tw-h-full"
+    >
       { events.map((event, index) => <EventLIstItem key={ index } event={ event } />) }
     </div>
   )

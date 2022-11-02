@@ -8,7 +8,15 @@ module.exports = {
   important: true,
   prefix: 'tw-',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: {
+          light: '#0069FF',
+          DEFAULT: '#0069FF',
+          dark: '#0069FF',
+        }
+      }
+    },
   },
   plugins: [],
 }

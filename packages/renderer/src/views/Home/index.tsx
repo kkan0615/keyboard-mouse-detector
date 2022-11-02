@@ -16,9 +16,11 @@ const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
 const Home = () => {
   const electron = useElectron()
-
+  // Start time
   const [ startTime, setStartTime ] = useState('')
+  // End time
   const [ endTime, setEndTime ] = useState('')
+  // Hooke events
   const [ hookEvents, setHookEvents ] = useState<Record<hookEvents, boolean>>({
     input: false,
     keydown: false,
@@ -29,13 +31,25 @@ const Home = () => {
     click: false,
     wheel: false,
   })
+  // Record Status
   const [ status, setStatus ] = useState<RecordStatus>('IDLE')
+  // Event histories
   const [ events, setEvents ] = useState<(ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent)[]>([])
+  // Passed seconds
+  const [ seconds, setSeconds ] = useState(0)
+  // Timer
+  const [ timer, setTimer ] = useState<NodeJS.Timeout | null>(null)
 
+  /**
+   * Formatted start time
+   */
   const formatStartTime = useMemo(() => {
     return startTime ? dayjs(startTime).format(dateFormat) : ''
   }, [ startTime ])
 
+  /**
+   * Formatted end time
+   */
   const formatEndTime = useMemo(() => {
     return endTime ? dayjs(endTime).format(dateFormat) : ''
   }, [ endTime ])
@@ -128,43 +142,50 @@ const Home = () => {
 
   return (
     <div
-      className="tw-flex tw-flex-col"
-      style={ {
-        'height': '200px'
-      } }
+      className="tw-h-full tw-flex tw-flex-col"
     >
-      <Header />
       <div
-        className="tw-grow-shrink tw-text-center"
+        className="tw-shrink tw-w-full"
       >
-        { status === 'IDLE' ?
-          <StartBtn onClick={ startRecord } />: null
-        }
-        { status === 'RUNNING' ?
-          <PauseBtn onClick={ pauseRecord } /> : null
-        }
-        { status === 'PAUSE' ?
-          <StartBtn onClick={ restartRecord } />: null
-        }
-        { (status === 'RUNNING' || status === 'PAUSE') ?
-          <StopBtn onClick={ stopRecord } /> : null
-        }
+        <Header />
+      </div>
+      { /* Controller */ }
+      <div
+        className="tw-grow tw-flex tw-flex-col tw-h-full tw-items-center tw-justify-center tw-w-full"
+      >
         <div
-          className="tw-grow "
+          className="tw-w-full tw-shrink tw-text-center"
         >
+          { status === 'IDLE' ?
+            <StartBtn onClick={ startRecord } />: null
+          }
+          { status === 'RUNNING' ?
+            <PauseBtn onClick={ pauseRecord } /> : null
+          }
+          { status === 'PAUSE' ?
+            <StartBtn onClick={ restartRecord } />: null
+          }
+          { (status === 'RUNNING' || status === 'PAUSE') ?
+            <StopBtn onClick={ stopRecord } /> : null
+          }
           <div>
-            { formatStartTime }
-          </div>
-          <div>
-            { formatEndTime ? '~' : null }
-          </div>
-          <div>
-            { formatEndTime }
+            <div>
+              { formatStartTime }
+            </div>
+            <div>
+              { formatEndTime ? '~' : null }
+            </div>
+            <div>
+              { formatEndTime }
+            </div>
           </div>
         </div>
+        <div
+          className="tw-grow tw-h-1 tw-w-full tw-overflow-auto"
+        >
+          <EventList events={ events } />
+        </div>
       </div>
-      <EventList events={ events } />
-
     </div>
   )
 }
