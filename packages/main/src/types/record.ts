@@ -1,12 +1,6 @@
 import dayjs from 'dayjs'
-import { EventType, UiohookKeyboardEvent, UiohookMouseEvent, UiohookWheelEvent } from 'uiohook-napi'
-import {
-  iohookValue,
-  ResHookKeyboardEvent,
-  ResHookMouseEvent,
-  ResHookMouseEventType,
-  ResHookWheelEvent
-} from './hookEvent'
+import { UiohookKeyboardEvent, UiohookMouseEvent, UiohookWheelEvent } from 'uiohook-napi'
+import { iohookValue, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from './hookEvent'
 
 const parseKeyboardEvent = (e: UiohookKeyboardEvent) => {
   return {
@@ -17,24 +11,8 @@ const parseKeyboardEvent = (e: UiohookKeyboardEvent) => {
 }
 
 const parseMouseEvent = (e: UiohookMouseEvent) => {
-  let type: ResHookMouseEventType = 'clicked'
-  switch (e.type) {
-    case EventType.EVENT_MOUSE_CLICKED:
-      type = 'clicked'
-      break
-    case EventType.EVENT_MOUSE_MOVED:
-      type = 'moved'
-      break
-    case EventType.EVENT_MOUSE_PRESSED:
-      type = 'pressed'
-      break
-    case EventType.EVENT_MOUSE_RELEASED:
-      type = 'released'
-      break
-  }
   return {
     ...e,
-    type,
     time: dayjs().toISOString(),
   } as ResHookMouseEvent
 }

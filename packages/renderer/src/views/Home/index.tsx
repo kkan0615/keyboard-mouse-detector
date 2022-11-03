@@ -136,7 +136,6 @@ const Home = () => {
   }
 
   const addEvent = (event: ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent) => {
-    console.log(event)
     setEvents((prevState) => [ ...prevState, event ])
   }
 

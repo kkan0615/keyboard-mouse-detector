@@ -142,11 +142,22 @@ export type ResHookKeyboardEvent = {
 
 export type ResHookMouseEventType = 'clicked' | 'moved' | 'pressed' | 'released'
 
-export type ResHookMouseEvent = Omit<UiohookMouseEvent, 'type'> & {
-  type: ResHookMouseEventType
+export type ResHookMouseEvent = {
+  // type: ResHookMouseEventType
   time: string
 }
 
 export type ResHookWheelEvent = {
+  type?: number
   time: string
+}
+
+export const hookTypeToName: Record<number, string> = {
+  4: 'KEY_PRESSED',
+  5: 'KEY_RELEASED',
+  6: 'MOUSE_CLICKED',
+  7: 'MOUSE_PRESSED',
+  8: 'MOUSE_RELEASED',
+  9: 'MOUSE_MOVED',
+  11: 'MOUSE_WHEEL',
 }

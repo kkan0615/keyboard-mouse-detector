@@ -1,4 +1,4 @@
-import { ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
+import { hookTypeToName, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
 import { useMemo } from 'react'
 import dayjs from 'dayjs'
 
@@ -17,9 +17,26 @@ const EventList = ({ event } : Props) => {
     return ('keyName' in event) ? event.keyName : ''
   }, [ event ])
 
+  const typeName = useMemo(() => {
+    return ('type' in event) && event.type ? hookTypeToName[event.type] : ''
+  }, [ event ])
+
+  const fullStr = useMemo(() => {
+    const result: string[] = []
+    console.log(event)
+    result.push(date)
+    result.push(typeName)
+
+    if (keyName) {
+      result.push(keyName)
+    }
+
+    return result.join(' - ')
+  }, [ date, keyName, typeName ])
+
   return (
     <div>
-      { date } - { keyName }
+      { fullStr }
     </div>
   )
 }

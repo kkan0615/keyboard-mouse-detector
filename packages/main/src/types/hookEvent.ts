@@ -131,13 +131,11 @@ export type ResHookKeyboardEvent = Omit<UiohookKeyboardEvent, 'time'> & {
   time: string
 }
 
-export type ResHookMouseEventType = 'clicked' | 'moved' | 'pressed' | 'released'
-
-export type ResHookMouseEvent = Omit<UiohookMouseEvent, 'time' | 'type'> & {
-  type: ResHookMouseEventType
+export type ResHookMouseEvent = Omit<UiohookMouseEvent, 'time'> & {
   time: string
 }
 
 export type ResHookWheelEvent = Omit<UiohookWheelEvent, 'time'> & {
+  type: string
   time: string
 }
