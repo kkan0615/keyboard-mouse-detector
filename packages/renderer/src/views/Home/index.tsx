@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
 // import './index.scss'
 import { Icon } from '@iconify/react'
@@ -54,14 +54,30 @@ const Home = () => {
     return endTime ? dayjs(endTime).format(dateFormat) : ''
   }, [ endTime ])
 
+  const formattedSeconds = useMemo(() => {
+    if (seconds <= 0) {
+      return '00:00:00'
+    }
+    const h = Math.floor(seconds / 3600).toString().padStart(2, '0')
+    const m = Math.floor(seconds % 3600 / 60).toString().padStart(2, '0')
+    const s = Math.floor(seconds % 60).toString().padStart(2, '0')
+
+    return `${h}:${m}:${s}`
+  }, [ seconds ])
+
   // Get current record data
   useEffect(() => {
     electron.invoke<undefined, RecordData>('get-record-data')
       .then((value) => {
         setStartTime(value.startTime)
         setEndTime(value.endTime)
-        setStatus(value.status)
         setEvents(value.events)
+
+        if (value.status === 'RUNNING') {
+          // @TODO: add a logic that changes seconds
+          setSeconds(dayjs(value.startTime).diff(dayjs(), 'seconds'))
+        }
+        setStatus(value.status)
       })
   }, [])
 
@@ -88,6 +104,25 @@ const Home = () => {
     }
   }, [])
 
+  /**
+   * When status is changed to "RUNNING", start the timer
+   */
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null
+    if (status === 'RUNNING') {
+      timer = setInterval(() => {
+        setSeconds((prevState) => prevState + 1)
+      }, 1000)
+    }
+
+    return () => {
+      if (timer) {
+        clearInterval(timer)
+        timer = null
+      }
+    }
+  }, [ status ])
+
   const keyboardListener = (event: IpcRendererEvent, args?: ResHookKeyboardEvent) => {
     if (args) {
       addEvent(args)
@@ -112,6 +147,7 @@ const Home = () => {
     setStartTime(currentTime)
     setEndTime('')
     setStatus('RUNNING')
+    setSeconds(0)
     electron.send('start-record')
   }
 
@@ -136,7 +172,7 @@ const Home = () => {
   }
 
   const addEvent = (event: ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent) => {
-    setEvents((prevState) => [ ...prevState, event ])
+    setEvents((prevState) => [ event, ...prevState ])
   }
 
   return (
@@ -177,6 +213,14 @@ const Home = () => {
             <div>
               { formatEndTime }
             </div>
+
+            { status === 'RUNNING' ?
+              <div>
+                { formattedSeconds }
+              </div> :
+              null
+            }
+
           </div>
         </div>
         <div

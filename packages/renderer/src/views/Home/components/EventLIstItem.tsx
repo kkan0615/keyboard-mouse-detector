@@ -9,8 +9,23 @@ interface Props {
 }
 
 const EventList = ({ event } : Props) => {
+  /**
+   * Get formatted Date
+   */
   const date = useMemo(() => {
-    return dayjs(event.time).format(dateFormat)
+    // Current date
+    const cDdate = dayjs()
+    // Target date
+    const tDate = dayjs(event.time)
+    /*
+      If current date and Target dates are same (only for year, month, and day)
+        returns only time
+    */
+    if (cDdate.format('L') === tDate.format('L')) {
+      return dayjs(event.time).format('h:mm:ss a')
+    }
+
+    return dayjs(event.time).format('MMM D YYYY, h:mm:ss a')
   }, [ event ])
 
   const keyName = useMemo(() => {
@@ -23,7 +38,6 @@ const EventList = ({ event } : Props) => {
 
   const fullStr = useMemo(() => {
     const result: string[] = []
-    console.log(event)
     result.push(date)
     result.push(typeName)
 
