@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
 // import './index.scss'
 import { Icon } from '@iconify/react'
@@ -20,17 +20,6 @@ const Home = () => {
   const [ startTime, setStartTime ] = useState('')
   // End time
   const [ endTime, setEndTime ] = useState('')
-  // Hooke events
-  const [ hookEvents, setHookEvents ] = useState<Record<hookEvents, boolean>>({
-    input: false,
-    keydown: false,
-    keyup: false,
-    mousedown: false,
-    mouseup: false,
-    mousemove: false,
-    click: false,
-    wheel: false,
-  })
   // Record Status
   const [ status, setStatus ] = useState<RecordStatus>('IDLE')
   // Event histories

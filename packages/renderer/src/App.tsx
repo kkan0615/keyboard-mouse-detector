@@ -1,6 +1,9 @@
 import './App.css'
 import { Outlet } from 'react-router'
+import { useElectron } from '@/hooks/electron'
 const App = () => {
+  const { dark } = useElectron()
+
   return (
     <div
       className="tw-flex tw-flex-col tw-h-screen"

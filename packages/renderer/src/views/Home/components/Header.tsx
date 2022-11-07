@@ -1,4 +1,5 @@
 import Setting from '@/views/Home/components/Setting'
+import { DarkModeBtn } from '@/components/DarkModeBtn'
 
 const Header = () => {
   return (
@@ -9,8 +10,9 @@ const Header = () => {
         Header
       </div>
       <div
-        className="tw-mr-auto"
+        className="tw-ml-auto"
       />
+      <DarkModeBtn />
       <Setting />
     </div>
   )

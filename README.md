@@ -41,4 +41,11 @@ pnpm run build
 ```
 
 # Todo
+## 진행 중이던거
+- DARK MODE
+- Setting Dialog 끝내기
+
 ## 옮겨야 할것
+- Dark mode
+  - Payload
+  - Electron hook

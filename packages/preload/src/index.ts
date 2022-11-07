@@ -1,9 +1,17 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron'
+import { contextBridge, ipcRenderer, IpcRendererEvent, nativeTheme } from 'electron'
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
+})
+
+contextBridge.exposeInMainWorld('systems', {
+  dark: () => nativeTheme.shouldUseDarkColors,
+  setMode: (mode: 'light' | 'dark' | 'system') => {
+    nativeTheme.themeSource = mode
+    return nativeTheme.shouldUseDarkColors
+  }
 })
 
 contextBridge.exposeInMainWorld('renderer', {
