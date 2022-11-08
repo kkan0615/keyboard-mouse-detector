@@ -1,0 +1,8 @@
+.c-contained-btn {
+  @apply tw-rounded-full;
+  @apply tw-bg-primary tw-text-white;
+
+  &:hover {
+    @apply tw-shadow-lg;
+  }
+}

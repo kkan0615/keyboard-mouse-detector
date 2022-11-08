@@ -8,11 +8,11 @@ const App = () => {
     <div
       className="tw-flex tw-flex-col tw-h-screen"
     >
-      <div
-        className="tw-shrink"
-      >
-        System Menu bar
-      </div>
+      { /* <div*/ }
+      { /*  className="tw-shrink"*/ }
+      { /* >*/ }
+      { /*  System Menu bar*/ }
+      { /* </div>*/ }
       <div
         className="tw-grow tw-h-1"
       >

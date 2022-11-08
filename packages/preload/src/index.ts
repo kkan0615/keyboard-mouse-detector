@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, IpcRendererEvent, nativeTheme } from 'electron'
+import { contextBridge, ipcRenderer, IpcRendererEvent, nativeTheme, shell } from 'electron'
 
 contextBridge.exposeInMainWorld('versions', {
   node: () => process.versions.node,
@@ -11,6 +11,9 @@ contextBridge.exposeInMainWorld('systems', {
   setMode: (mode: 'light' | 'dark' | 'system') => {
     nativeTheme.themeSource = mode
     return nativeTheme.shouldUseDarkColors
+  },
+  openFolder: (fullPath: string) => {
+    shell.showItemInFolder(fullPath)
   }
 })
 

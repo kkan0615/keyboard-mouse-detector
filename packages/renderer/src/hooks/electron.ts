@@ -8,6 +8,7 @@ export const useElectron = () => {
     // Systems
     dark: systems.dark as boolean,
     setMode: systems.setMode as (mode: 'light' | 'dark' | 'system') => boolean,
+    openFolder: systems.openFolder as (fullPath: string) => void,
     // renderer
     send: renderer.send as <T = any>(channel: string, args?: T) => void,
     on: renderer.on as <T = any>(channel: string, listener?: (event: IpcRendererEvent, args?: T) => void) => void,

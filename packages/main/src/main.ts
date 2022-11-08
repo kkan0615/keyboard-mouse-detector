@@ -1,5 +1,5 @@
 // packages/main/src/index.ts
-import { app } from 'electron'
+import { app, dialog } from 'electron'
 import { createAppWindow } from './windows/app'
 import { uIOhook } from 'uiohook-napi'
 import dayjs from 'dayjs'

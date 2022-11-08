@@ -1,0 +1,7 @@
+.c-checkbox-container {
+  @apply tw-space-x-2 tw-flex tw-items-center;
+
+  input {
+    @apply tw-accent-primary
+  }
+}
