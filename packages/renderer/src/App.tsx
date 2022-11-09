@@ -1,6 +1,7 @@
 import './App.css'
 import { Outlet } from 'react-router'
 import { useElectron } from '@/hooks/electron'
+import { Helmet } from 'react-helmet'
 const App = () => {
   const { dark } = useElectron()
 
@@ -8,6 +9,9 @@ const App = () => {
     <div
       className="tw-flex tw-flex-col tw-h-screen"
     >
+      <Helmet>
+        <title>Keyboard mouse detector</title>
+      </Helmet>
       { /* <div*/ }
       { /*  className="tw-shrink"*/ }
       { /* >*/ }

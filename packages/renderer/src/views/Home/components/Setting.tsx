@@ -7,6 +7,9 @@ import CContainedBtn from '@/components/commons/buttons/Contained'
 import { useElectron } from '@/hooks/electron'
 import { RecordSetting } from '@/types/setting'
 import { OpenDialogOptions, OpenDialogReturnValue } from 'electron'
+import { CDialogHeader } from '@/components/Dialog/components/Header'
+import { CDialogContent } from '@/components/Dialog/components/Content'
+import { CDialogAction } from '@/components/Dialog/components/Action'
 
 const Setting = () => {
   const { send, invoke, openFolder } = useElectron()
@@ -121,124 +124,127 @@ const Setting = () => {
         open={ open }
       >
         <div
-          className="tw-flex tw-flex-col"
+          className="tw-flex tw-flex-col tw-divide-y-2"
         >
-          <div
-            className="tw-flex tw-items-center tw-mb-2"
-          >
-            <h3
-              className="tw-text-2xl"
-            >
-              Setting
-            </h3>
-            <div
-              className="tw-ml-auto"
-            />
-            <button
-              className="tw-text-2xl"
-              onClick={ toggleOpen }
-            >
-              <Icon
-                icon="material-symbols:close-rounded"
+          <CDialogHeader>
+            <>
+              <h3
+                className="tw-text-2xl"
+              >
+                Setting
+              </h3>
+              <div
+                className="tw-ml-auto"
               />
-            </button>
-          </div>
-          <div>
-            <div
-              className="tw-mb-2"
-            >
-              <div
-                className="tw-text-xl"
+              <button
+                className="tw-text-2xl"
+                onClick={ toggleOpen }
               >
-                Download Path
-              </div>
+                <Icon
+                  icon="material-symbols:close-rounded"
+                />
+              </button>
+            </>
+          </CDialogHeader>
+          <CDialogContent
+          >
+            <>
               <div
-                className="tw-truncate"
+                className="tw-mb-4"
               >
-                { downloadPath }
-              </div>
-              <div
-                className="tw-mt-2 tw-text-right tw-space-x-2"
-              >
-                <CContainedBtn
-                  className="tw-py-1 px-1"
-                  onClick={ handleOpenDownloadPath }
+                <div
+                  className="tw-text-xl"
                 >
-                  Open
-                </CContainedBtn>
-                <CContainedBtn
-                  className="tw-py-1 px-1"
+                  Download Path
+                </div>
+                <div
+                  className="tw-truncate"
+                >
+                  { downloadPath }
+                </div>
+                <div
+                  className="tw-mt-2 tw-text-right tw-space-x-1"
+                >
+                  <CContainedBtn
+                    className="tw-py-0.5 px-1"
+                    onClick={ handleOpenDownloadPath }
+                  >
+                    Open
+                  </CContainedBtn>
+                  <CContainedBtn
+                    className="tw-py-0.5 px-1"
 
-                  onClick={ handleChangePath }
-                >
-                  Change
-                </CContainedBtn>
-              </div>
-            </div>
-            <div
-              className="tw-mb-2"
-            >
-              <div
-                className="tw-text-xl"
-              >
-                Events
+                    onClick={ handleChangePath }
+                  >
+                    Change
+                  </CContainedBtn>
+                </div>
               </div>
               <div>
-                Check the events you want to listen
+                <div
+                  className="tw-text-xl"
+                >
+                  Events
+                </div>
+                <div>
+                  Check the events you want to listen
+                </div>
               </div>
-            </div>
-            <div
-              className="tw-grid tw-grid-cols-2 tw-gap-2"
-            >
-              <CCheckbox
-                checked={ keyup }
-                onChange={ () => handleChange('keyup') }
-                label="KeyUp"
-              />
-              <CCheckbox
-                checked={ keydown }
-                onChange={ () => handleChange('keydown') }
-                label="keydown"
-              />
-              <CCheckbox
-                checked={ mousedown }
-                onChange={ () => handleChange('mousedown') }
-                label="mousedown"
-              />
-              <CCheckbox
-                checked={ mouseup }
-                onChange={ () => handleChange('mouseup') }
-                label="mouseup"
-              />
-              <CCheckbox
-                checked={ mousemove }
-                onChange={ () => handleChange('mousemove') }
-                label="mousemove"
-              />
-              <CCheckbox
-                checked={ click }
-                onChange={ () => handleChange('click') }
-                label="click"
-              />
-              <CCheckbox
-                checked={ wheel }
-                onChange={ () => handleChange('wheel') }
-                label="wheel"
-              />
-            </div>
-          </div>
-          <div
-            className="tw-flex tw-items-center"
+              <div
+                className="tw-grid tw-grid-cols-2 tw-gap-2"
+              >
+                <CCheckbox
+                  checked={ keyup }
+                  onChange={ () => handleChange('keyup') }
+                  label="KeyUp"
+                />
+                <CCheckbox
+                  checked={ keydown }
+                  onChange={ () => handleChange('keydown') }
+                  label="keydown"
+                />
+                <CCheckbox
+                  checked={ mousedown }
+                  onChange={ () => handleChange('mousedown') }
+                  label="mousedown"
+                />
+                <CCheckbox
+                  checked={ mouseup }
+                  onChange={ () => handleChange('mouseup') }
+                  label="mouseup"
+                />
+                <CCheckbox
+                  checked={ mousemove }
+                  onChange={ () => handleChange('mousemove') }
+                  label="mousemove"
+                />
+                <CCheckbox
+                  checked={ click }
+                  onChange={ () => handleChange('click') }
+                  label="click"
+                />
+                <CCheckbox
+                  checked={ wheel }
+                  onChange={ () => handleChange('wheel') }
+                  label="wheel"
+                />
+              </div>
+            </>
+          </CDialogContent>
+
+          <CDialogAction
           >
-            <div
-              className="tw-ml-auto"
-            />
-            <CContainedBtn
-              onClick={ handleSave }
-            >
-              Save
-            </CContainedBtn>
-          </div>
+            <>
+              <div
+                className="tw-ml-auto"
+              />
+              <CContainedBtn
+                onClick={ handleSave }
+              >
+                Save
+              </CContainedBtn>
+            </>
+          </CDialogAction>
         </div>
       </CDialog>
     </div>

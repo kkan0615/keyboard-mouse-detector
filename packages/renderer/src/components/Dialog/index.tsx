@@ -16,7 +16,7 @@ export const CDialog = ({ open, children, className, onClose }: Props) => {
 
   return (
     <dialog
-      className={ 'tw-px-4 tw-py-5 tw-rounded ' + className }
+      className={ 'tw-p-0 tw-rounded ' + className }
       ref={ dialogRef }
       onClose={ onClose }
     >
