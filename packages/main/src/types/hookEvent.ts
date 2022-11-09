@@ -126,6 +126,12 @@ export const iohookValue: Record<string, string> = {
   '3639': 'PrintScreen',
 }
 
+export const MouseButtonOutput: Record<number, string> = {
+  1: 'left',
+  2: 'right',
+  3: 'wheel',
+}
+
 export type ResHookKeyboardEvent = Omit<UiohookKeyboardEvent, 'time'> & {
   keyName : string
   time: string
@@ -136,6 +142,5 @@ export type ResHookMouseEvent = Omit<UiohookMouseEvent, 'time'> & {
 }
 
 export type ResHookWheelEvent = Omit<UiohookWheelEvent, 'time'> & {
-  type: string
   time: string
 }

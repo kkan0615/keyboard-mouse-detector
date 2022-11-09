@@ -4,7 +4,8 @@ import { app } from 'electron'
 import dayjs from 'dayjs'
 import fsp from 'fs/promises'
 import { initIoHookListeners } from '../listenrers/iohooks'
-import { uIOhook } from 'uiohook-napi'
+import { EventType, uIOhook } from 'uiohook-napi'
+import { MouseButtonOutput, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '../types/hookEvent'
 
 // Dayjs format for file name
 const fileNameDateFormat = 'YYYY-MM-DD-HH-mm-ss'
@@ -82,33 +83,45 @@ export const stopRecord = async () => {
 
     // Make file content
     let fileContent = `${dayjs(recordData.startTime).format(dateFormat)} ~ ${dayjs(recordData.endTime).format(dateFormat)} \n`
+    // Add time stamp
     events.map((event) => {
-      // Add time stamp
+      const row: string[] = []
       fileContent += `${dayjs(event.time).format(dateFormat)} - `
-      if ('keyName' in event) {
-        fileContent += `${event.keyName || event.keycode} `
+      switch (event.type) {
+        case EventType.EVENT_KEY_PRESSED:
+        case EventType.EVENT_KEY_RELEASED:
+          event = event as ResHookKeyboardEvent
+          row.push(`${event.keyName || event.keycode}`)
+          row.push('Ctrl')
+          row.push('Alt')
+          row.push('Shift')
+          row.push('Meta')
+          break
+        case EventType.EVENT_MOUSE_CLICKED:
+        case EventType.EVENT_MOUSE_PRESSED:
+        case EventType.EVENT_MOUSE_RELEASED:
+        case EventType.EVENT_MOUSE_MOVED:
+          event = event as ResHookMouseEvent
+          row.push(`x: ${event.x}`)
+          row.push(`y: ${event.y}`)
+          row.push(`clicks: ${event.clicks}`)
+          row.push(`button: ${MouseButtonOutput[event.button as number]}`)
+          break
+        case EventType.EVENT_MOUSE_WHEEL:
+          event = event as ResHookWheelEvent
+          row.push('Ctrl')
+          row.push('Alt')
+          row.push('Shift')
+          row.push('Meta')
+          row.push(`x: ${event.x}`)
+          row.push(`y: ${event.y}`)
+          row.push(`amount: ${event.amount}`)
+          row.push(`direction: ${event.direction}`)
+          row.push(`rotation: ${event.rotation}`)
+          break
       }
-      if (event.ctrlKey) {
-        fileContent += 'Ctrl '
-      }
-      if (event.altKey) {
-        fileContent += 'Alt '
-      }
-      if (event.shiftKey) {
-        fileContent += 'Shift '
-      }
-      if (event.metaKey) {
-        fileContent += 'Meta'
-      }
-      if ('x' in event) {
-        fileContent += `${event.x} `
-      }
-      if ('y' in event) {
-        fileContent += `${event.y} `
-      }
-      if ('clicks' in event) {
-        fileContent += `clicks: ${event.clicks} `
-      }
+      // Add "," for each
+      fileContent += row.join(', ')
       // Add enter
       fileContent += '\n'
     })
