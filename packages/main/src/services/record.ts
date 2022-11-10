@@ -13,6 +13,52 @@ const fileNameDateFormat = 'YYYY-MM-DD-HH-mm-ss'
 const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
 /**
+ * Parse event and return string
+ * @param event
+ * @returns - parsed string
+ */
+export const parseEventToStr = (event: ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent) => {
+  const row: string[] = []
+  // Add time stamp
+  row.push(`${dayjs(event.time).format(dateFormat)}`)
+  switch (event.type) {
+    case EventType.EVENT_KEY_PRESSED:
+    case EventType.EVENT_KEY_RELEASED:
+      event = event as ResHookKeyboardEvent
+      row.push(`${event.keyName || event.keycode}`)
+      row.push('Ctrl')
+      row.push('Alt')
+      row.push('Shift')
+      row.push('Meta')
+      break
+    case EventType.EVENT_MOUSE_CLICKED:
+    case EventType.EVENT_MOUSE_PRESSED:
+    case EventType.EVENT_MOUSE_RELEASED:
+    case EventType.EVENT_MOUSE_MOVED:
+      event = event as ResHookMouseEvent
+      row.push(`x: ${event.x}`)
+      row.push(`y: ${event.y}`)
+      row.push(`clicks: ${event.clicks}`)
+      row.push(`button: ${MouseButtonOutput[event.button as number]}`)
+      break
+    case EventType.EVENT_MOUSE_WHEEL:
+      event = event as ResHookWheelEvent
+      row.push('Ctrl')
+      row.push('Alt')
+      row.push('Shift')
+      row.push('Meta')
+      row.push(`x: ${event.x}`)
+      row.push(`y: ${event.y}`)
+      row.push(`amount: ${event.amount}`)
+      row.push(`direction: ${event.direction}`)
+      row.push(`rotation: ${event.rotation}`)
+      break
+  }
+  // Change to string
+  return row.join(', ')
+}
+
+/**
  * Get current record data
  */
 export const getRecordData = () => {
@@ -83,46 +129,9 @@ export const stopRecord = async () => {
 
     // Make file content
     let fileContent = `${dayjs(recordData.startTime).format(dateFormat)} ~ ${dayjs(recordData.endTime).format(dateFormat)} \n`
-    // Add time stamp
+    // Parse all events and add it to file contents
     events.map((event) => {
-      const row: string[] = []
-      fileContent += `${dayjs(event.time).format(dateFormat)} - `
-      switch (event.type) {
-        case EventType.EVENT_KEY_PRESSED:
-        case EventType.EVENT_KEY_RELEASED:
-          event = event as ResHookKeyboardEvent
-          row.push(`${event.keyName || event.keycode}`)
-          row.push('Ctrl')
-          row.push('Alt')
-          row.push('Shift')
-          row.push('Meta')
-          break
-        case EventType.EVENT_MOUSE_CLICKED:
-        case EventType.EVENT_MOUSE_PRESSED:
-        case EventType.EVENT_MOUSE_RELEASED:
-        case EventType.EVENT_MOUSE_MOVED:
-          event = event as ResHookMouseEvent
-          row.push(`x: ${event.x}`)
-          row.push(`y: ${event.y}`)
-          row.push(`clicks: ${event.clicks}`)
-          row.push(`button: ${MouseButtonOutput[event.button as number]}`)
-          break
-        case EventType.EVENT_MOUSE_WHEEL:
-          event = event as ResHookWheelEvent
-          row.push('Ctrl')
-          row.push('Alt')
-          row.push('Shift')
-          row.push('Meta')
-          row.push(`x: ${event.x}`)
-          row.push(`y: ${event.y}`)
-          row.push(`amount: ${event.amount}`)
-          row.push(`direction: ${event.direction}`)
-          row.push(`rotation: ${event.rotation}`)
-          break
-      }
-      // Add "," for each
-      fileContent += row.join(', ')
-      // Add enter
+      fileContent += parseEventToStr(event)
       fileContent += '\n'
     })
 
