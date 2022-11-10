@@ -1,5 +1,5 @@
 export const enDictionary = {
-  Test: 'Hello world',
+  test: 'Hello world',
   commons: {
     tooltips: {
       search: 'search',

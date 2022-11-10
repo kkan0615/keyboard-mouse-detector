@@ -1,5 +1,6 @@
 import Setting from '@/views/Home/components/Setting'
 import { DarkModeBtn } from '@/components/DarkModeBtn'
+import { LanguageSelect } from '@/components/commons/LanguageSelect'
 
 const Header = () => {
   return (
@@ -12,8 +13,13 @@ const Header = () => {
       <div
         className="tw-ml-auto"
       />
-      <DarkModeBtn />
-      <Setting />
+      <div
+        className="tw-flex tw-items-center tw-space-x-2"
+      >
+        <LanguageSelect />
+        <DarkModeBtn />
+        <Setting />
+      </div>
     </div>
   )
 }

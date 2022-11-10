@@ -1,3 +1,3 @@
 export const koDictionary = {
-  Test: '안녕하세요 !',
+  test: '안녕하세요 !',
 }
