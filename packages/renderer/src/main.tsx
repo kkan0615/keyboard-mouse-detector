@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.scss'
+/* Locale (i18n) */
+import './locales'
 // Router
 import router from '@/router'
 import {

@@ -1,17 +1,19 @@
-import { Icon } from '@iconify/react'
-import { CDialog } from '@/components/Dialog'
 import { useEffect, useState } from 'react'
+import { Icon } from '@iconify/react'
+import { OpenDialogOptions, OpenDialogReturnValue } from 'electron'
 import { hookEvents } from '@/types/hookEvent'
+import { CDialog } from '@/components/Dialog'
 import CCheckbox from '@/components/commons/forms/Checkbox'
 import CContainedBtn from '@/components/commons/buttons/Contained'
 import { useElectron } from '@/hooks/electron'
 import { RecordSetting } from '@/types/setting'
-import { OpenDialogOptions, OpenDialogReturnValue } from 'electron'
 import { CDialogHeader } from '@/components/Dialog/components/Header'
 import { CDialogContent } from '@/components/Dialog/components/Content'
 import { CDialogAction } from '@/components/Dialog/components/Action'
+import { useTranslation } from 'react-i18next'
 
 const Setting = () => {
+  const { t } = useTranslation()
   const { send, invoke, openFolder } = useElectron()
 
   const [ open, setOpen ] = useState(false)
@@ -129,9 +131,9 @@ const Setting = () => {
           <CDialogHeader>
             <>
               <h3
-                className="tw-text-2xl"
+                className="tw-text-2xl tw-capitalize"
               >
-                Setting
+                { t('pages.home.setting.title') }
               </h3>
               <div
                 className="tw-ml-auto"
@@ -155,7 +157,7 @@ const Setting = () => {
                 <div
                   className="tw-text-xl"
                 >
-                  Download Path
+                  { t('pages.home.setting.downloadPath') }
                 </div>
                 <div
                   className="tw-truncate"
@@ -169,25 +171,27 @@ const Setting = () => {
                     className="tw-py-0.5 px-1"
                     onClick={ handleOpenDownloadPath }
                   >
-                    Open
+                    { t('commons.buttons.open') }
                   </CContainedBtn>
                   <CContainedBtn
                     className="tw-py-0.5 px-1"
 
                     onClick={ handleChangePath }
                   >
-                    Change
+                    { t('commons.buttons.change') }
                   </CContainedBtn>
                 </div>
               </div>
-              <div>
+              <div
+                className="tw-mb-2"
+              >
                 <div
                   className="tw-text-xl"
                 >
-                  Events
+                  { t('pages.home.setting.events') }
                 </div>
                 <div>
-                  Check the events you want to listen
+                  { t('pages.home.setting.eventsSubMsg') }
                 </div>
               </div>
               <div
@@ -196,7 +200,7 @@ const Setting = () => {
                 <CCheckbox
                   checked={ keyup }
                   onChange={ () => handleChange('keyup') }
-                  label="KeyUp"
+                  label="keyup"
                 />
                 <CCheckbox
                   checked={ keydown }
@@ -241,7 +245,7 @@ const Setting = () => {
               <CContainedBtn
                 onClick={ handleSave }
               >
-                Save
+                { t('commons.buttons.save') }
               </CContainedBtn>
             </>
           </CDialogAction>

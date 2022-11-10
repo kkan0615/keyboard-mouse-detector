@@ -3,6 +3,11 @@ Detect Mouse, Keyboard or Wheel events!
 
 # Screenshots
 
+# Supporting Languages
+- English
+- Korean [Developing...]
+- Chinese [Developing...]
+
 # Events Types
 | Event name     | Description            |
 |----------------|------------------------|
@@ -14,12 +19,17 @@ Detect Mouse, Keyboard or Wheel events!
 | MOUSE_MOVED    | When mouse is moved    |
 | MOUSE_WHEEL    | When wheel is worked   |
 
-# Todo
-## 진행 중이던거
-- DARK MODE
-- Setting Dialog 끝내기
+# Support me
+Thank you for supporting me! <br>
 
-## 옮겨야 할것
-- Dark mode
-  - Payload
-  - Electron hook
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/youngjinkwak)
+
+[//]: # (# Todo)
+[//]: # (## 진행 중이던거)
+[//]: # (- DARK MODE)
+[//]: # (- Setting Dialog 끝내기)
+[//]: # ()
+[//]: # (## 옮겨야 할것)
+[//]: # (- Dark mode)
+[//]: # (  - Payload)
+[//]: # (  - Electron hook)
