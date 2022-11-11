@@ -7,9 +7,6 @@ const Header = () => {
     <div
       className="tw-flex tw-items-center tw-px-2 tw-py-1"
     >
-      <div>
-        Header
-      </div>
       <div
         className="tw-ml-auto"
       />

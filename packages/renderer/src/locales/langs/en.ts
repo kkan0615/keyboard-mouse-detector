@@ -18,7 +18,8 @@ export const enDictionary = {
       send: 'send',
       copyURL: 'copy URL',
       open: 'open',
-      change: 'change'
+      change: 'change',
+      stop: 'stop'
     },
     Messages: {
       cancelSave: 'Would you like to cancel save?',

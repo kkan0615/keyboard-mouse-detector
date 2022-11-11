@@ -175,42 +175,58 @@ const Home = () => {
       </div>
       { /* Controller */ }
       <div
-        className="tw-grow tw-flex tw-flex-col tw-h-full tw-items-center tw-justify-center tw-w-full"
+        className="tw-grow tw-flex tw-flex-col tw-space-y-2 tw-h-full tw-items-center tw-justify-center tw-w-full"
       >
         <div
           className="tw-w-full tw-shrink tw-text-center"
         >
-          { status === 'IDLE' ?
-            <StartBtn onClick={ startRecord } />: null
-          }
-          { status === 'RUNNING' ?
-            <PauseBtn onClick={ pauseRecord } /> : null
-          }
-          { status === 'PAUSE' ?
-            <StartBtn onClick={ restartRecord } />: null
-          }
-          { (status === 'RUNNING' || status === 'PAUSE') ?
-            <StopBtn onClick={ stopRecord } /> : null
-          }
           <div>
-            <div>
-              { formatStartTime }
-            </div>
-            <div>
-              { formatEndTime ? '~' : null }
-            </div>
-            <div>
-              { formatEndTime }
-            </div>
-
+            { status === 'IDLE' ?
+              <StartBtn onClick={ startRecord } />: null
+            }
             { status === 'RUNNING' ?
-              <div>
-                { formattedSeconds }
+              <PauseBtn onClick={ pauseRecord } /> : null
+            }
+            { status === 'PAUSE' ?
+              <StartBtn onClick={ restartRecord } />: null
+            }
+            { (status === 'RUNNING' || status === 'PAUSE') ?
+              <StopBtn onClick={ stopRecord } /> : null
+            }
+          </div>
+          {
+            formatStartTime ?
+              <div
+                className="tw-mt-2 tw-bg-primary tw-rounded tw-inline-flex tw-space-x-2 tw-px-2 tw-py-1 tw-text-white"
+              >
+                <span
+                >
+                  { formatStartTime }
+                </span>
+                { formatEndTime ?
+                  <span>
+                      ~
+                  </span> :
+                  null
+                }
+                {
+                  formatEndTime ?
+                    <span>
+                      { formatEndTime }
+                    </span> :
+                    null
+                }
               </div> :
               null
-            }
-
-          </div>
+          }
+          { status === 'RUNNING' ?
+            <div
+              className="tw-text-xl tw-font-bold"
+            >
+              { formattedSeconds }
+            </div> :
+            null
+          }
         </div>
         <div
           className="tw-grow tw-h-1 tw-w-full tw-overflow-auto"

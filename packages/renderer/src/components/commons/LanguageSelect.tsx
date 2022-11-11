@@ -1,11 +1,9 @@
 import { useState } from 'react'
+import i18next from 'i18next'
 import { Icon } from '@iconify/react'
 import i18nNext, { i18nResources } from '@/locales'
-import { useTranslation } from 'react-i18next'
-import i18next from 'i18next'
 
 export const LanguageSelect = () => {
-  const { t } = useTranslation()
   const [ open, setOpen ] = useState(false)
   const supportingLangs = Object.keys(i18nResources)
 
@@ -15,6 +13,7 @@ export const LanguageSelect = () => {
 
   const changeLang = async (lang: string) => {
     await i18nNext.changeLanguage(lang)
+    setOpen(false)
   }
 
   return (

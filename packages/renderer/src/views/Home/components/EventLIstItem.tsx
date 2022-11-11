@@ -1,8 +1,13 @@
-import { hookTypeToName, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
+import {
+  HookEventType,
+  hookEventTypeToName,
+  MouseButtonOutput,
+  ResHookKeyboardEvent,
+  ResHookMouseEvent,
+  ResHookWheelEvent
+} from '@/types/hookEvent'
 import { useMemo } from 'react'
 import dayjs from 'dayjs'
-
-const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
 interface Props {
   event: ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent
@@ -28,25 +33,47 @@ const EventList = ({ event } : Props) => {
     return dayjs(event.time).format('MMM D YYYY, h:mm:ss a')
   }, [ event ])
 
-  const keyName = useMemo(() => {
-    return ('keyName' in event) ? event.keyName : ''
-  }, [ event ])
-
-  const typeName = useMemo(() => {
-    return ('type' in event) && event.type ? hookTypeToName[event.type] : ''
-  }, [ event ])
-
   const fullStr = useMemo(() => {
-    const result: string[] = []
-    result.push(date)
-    result.push(typeName)
-
-    if (keyName) {
-      result.push(keyName)
+    const row: string[] = []
+    // Add time stamp
+    row.push(`${date}`)
+    row.push(hookEventTypeToName[event.type])
+    switch (event.type) {
+      case HookEventType.EVENT_KEY_PRESSED:
+      case HookEventType.EVENT_KEY_RELEASED:
+        event = event as ResHookKeyboardEvent
+        row.push(`${event.keyName || event.keycode}`)
+        if (event.ctrlKey) row.push('Ctrl')
+        if (event.altKey) row.push('Alt')
+        if (event.shiftKey) row.push('Shift')
+        if (event.metaKey) row.push('Meta')
+        break
+      case HookEventType.EVENT_MOUSE_CLICKED:
+      case HookEventType.EVENT_MOUSE_PRESSED:
+      case HookEventType.EVENT_MOUSE_RELEASED:
+      case HookEventType.EVENT_MOUSE_MOVED:
+        event = event as ResHookMouseEvent
+        // row.push(`x: ${event.x}`)
+        // row.push(`y: ${event.y}`)
+        // row.push(`clicks: ${event.clicks}`)
+        row.push(`button: ${MouseButtonOutput[event.button as number]}`)
+        break
+      case HookEventType.EVENT_MOUSE_WHEEL:
+        event = event as ResHookWheelEvent
+        if (event.ctrlKey) row.push('Ctrl')
+        if (event.altKey) row.push('Alt')
+        if (event.shiftKey) row.push('Shift')
+        if (event.metaKey) row.push('Meta')
+        // row.push(`x: ${event.x}`)
+        // row.push(`y: ${event.y}`)
+        // row.push(`amount: ${event.amount}`)
+        // row.push(`direction: ${event.direction}`)
+        row.push(`rotation: ${event.rotation}`)
+        break
     }
-
-    return result.join(' - ')
-  }, [ date, keyName, typeName ])
+    // Change to string
+    return row.join(', ')
+  }, [ event ])
 
   return (
     <div>
