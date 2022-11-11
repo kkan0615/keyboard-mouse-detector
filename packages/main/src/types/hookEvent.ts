@@ -144,3 +144,13 @@ export type ResHookMouseEvent = Omit<UiohookMouseEvent, 'time'> & {
 export type ResHookWheelEvent = Omit<UiohookWheelEvent, 'time'> & {
   time: string
 }
+
+export const hookTypeToName: Record<number, string> = {
+  4: 'KEY_PRESSED',
+  5: 'KEY_RELEASED',
+  6: 'MOUSE_CLICKED',
+  7: 'MOUSE_PRESSED',
+  8: 'MOUSE_RELEASED',
+  9: 'MOUSE_MOVED',
+  11: 'MOUSE_WHEEL',
+}

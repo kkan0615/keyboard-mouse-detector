@@ -26,10 +26,10 @@ export const parseEventToStr = (event: ResHookKeyboardEvent | ResHookMouseEvent 
     case EventType.EVENT_KEY_RELEASED:
       event = event as ResHookKeyboardEvent
       row.push(`${event.keyName || event.keycode}`)
-      row.push('Ctrl')
-      row.push('Alt')
-      row.push('Shift')
-      row.push('Meta')
+      if (event.ctrlKey) row.push('Ctrl')
+      if (event.altKey) row.push('Alt')
+      if (event.shiftKey) row.push('Shift')
+      if (event.metaKey) row.push('Meta')
       break
     case EventType.EVENT_MOUSE_CLICKED:
     case EventType.EVENT_MOUSE_PRESSED:
@@ -43,10 +43,10 @@ export const parseEventToStr = (event: ResHookKeyboardEvent | ResHookMouseEvent 
       break
     case EventType.EVENT_MOUSE_WHEEL:
       event = event as ResHookWheelEvent
-      row.push('Ctrl')
-      row.push('Alt')
-      row.push('Shift')
-      row.push('Meta')
+      if (event.ctrlKey) row.push('Ctrl')
+      if (event.altKey) row.push('Alt')
+      if (event.shiftKey) row.push('Shift')
+      if (event.metaKey) row.push('Meta')
       row.push(`x: ${event.x}`)
       row.push(`y: ${event.y}`)
       row.push(`amount: ${event.amount}`)
