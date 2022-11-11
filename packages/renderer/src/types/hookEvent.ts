@@ -1,4 +1,4 @@
-import { UiohookMouseEvent } from 'uiohook-napi'
+import { UiohookKeyboardEvent, UiohookMouseEvent, UiohookWheelEvent } from 'uiohook-napi'
 
 export type hookEvents = 'input' |
 'keydown' |
@@ -135,24 +135,29 @@ export const iohookValue: Record<string, string> = {
   '3639': 'PrintScreen',
 }
 
-export type ResHookKeyboardEvent = {
+export const MouseButtonOutput: Record<number, string> = {
+  1: 'left',
+  2: 'right',
+  3: 'wheel',
+}
+
+export type ResHookKeyboardEvent = Omit<UiohookKeyboardEvent, 'time' | 'type'> & {
   keyName : string
   time: string
+  type: HookEventType.EVENT_KEY_PRESSED | HookEventType.EVENT_KEY_RELEASED
 }
 
-export type ResHookMouseEventType = 'clicked' | 'moved' | 'pressed' | 'released'
-
-export type ResHookMouseEvent = {
-  // type: ResHookMouseEventType
+export type ResHookMouseEvent = Omit<UiohookMouseEvent, 'time' | 'type'> & {
   time: string
+  type: HookEventType.EVENT_MOUSE_CLICKED | HookEventType.EVENT_MOUSE_MOVED | HookEventType.EVENT_MOUSE_PRESSED | HookEventType.EVENT_MOUSE_RELEASED;
 }
 
-export type ResHookWheelEvent = {
-  type?: number
+export type ResHookWheelEvent = Omit<UiohookWheelEvent, 'time'| 'type'> & {
   time: string
+  type: HookEventType.EVENT_MOUSE_WHEEL;
 }
 
-export const hookTypeToName: Record<number, string> = {
+export const hookEventTypeToName: Record<number, string> = {
   4: 'KEY_PRESSED',
   5: 'KEY_RELEASED',
   6: 'MOUSE_CLICKED',
@@ -160,4 +165,17 @@ export const hookTypeToName: Record<number, string> = {
   8: 'MOUSE_RELEASED',
   9: 'MOUSE_MOVED',
   11: 'MOUSE_WHEEL',
+}
+
+/**
+ * Because of process error, it's in here
+ */
+export enum HookEventType {
+  EVENT_KEY_PRESSED = 4,
+  EVENT_KEY_RELEASED = 5,
+  EVENT_MOUSE_CLICKED = 6,
+  EVENT_MOUSE_PRESSED = 7,
+  EVENT_MOUSE_RELEASED = 8,
+  EVENT_MOUSE_MOVED = 9,
+  EVENT_MOUSE_WHEEL = 11
 }

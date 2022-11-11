@@ -6,11 +6,7 @@ import fsp from 'fs/promises'
 import { initIoHookListeners } from '../listenrers/iohooks'
 import { EventType, uIOhook } from 'uiohook-napi'
 import { MouseButtonOutput, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '../types/hookEvent'
-
-// Dayjs format for file name
-const fileNameDateFormat = 'YYYY-MM-DD-HH-mm-ss'
-// dayjs format for file content
-const dateFormat = 'MMM D YYYY, h:mm:ss a'
+import { fileContentDateFormat, fileNameDateFormat } from '../types/date'
 
 /**
  * Parse event and return string
@@ -20,16 +16,16 @@ const dateFormat = 'MMM D YYYY, h:mm:ss a'
 export const parseEventToStr = (event: ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent) => {
   const row: string[] = []
   // Add time stamp
-  row.push(`${dayjs(event.time).format(dateFormat)}`)
+  row.push(`${dayjs(event.time).format(fileContentDateFormat)}`)
   switch (event.type) {
     case EventType.EVENT_KEY_PRESSED:
     case EventType.EVENT_KEY_RELEASED:
       event = event as ResHookKeyboardEvent
       row.push(`${event.keyName || event.keycode}`)
-      row.push('Ctrl')
-      row.push('Alt')
-      row.push('Shift')
-      row.push('Meta')
+      if (event.ctrlKey) row.push('Ctrl')
+      if (event.altKey) row.push('Alt')
+      if (event.shiftKey) row.push('Shift')
+      if (event.metaKey) row.push('Meta')
       break
     case EventType.EVENT_MOUSE_CLICKED:
     case EventType.EVENT_MOUSE_PRESSED:
@@ -43,10 +39,10 @@ export const parseEventToStr = (event: ResHookKeyboardEvent | ResHookMouseEvent 
       break
     case EventType.EVENT_MOUSE_WHEEL:
       event = event as ResHookWheelEvent
-      row.push('Ctrl')
-      row.push('Alt')
-      row.push('Shift')
-      row.push('Meta')
+      if (event.ctrlKey) row.push('Ctrl')
+      if (event.altKey) row.push('Alt')
+      if (event.shiftKey) row.push('Shift')
+      if (event.metaKey) row.push('Meta')
       row.push(`x: ${event.x}`)
       row.push(`y: ${event.y}`)
       row.push(`amount: ${event.amount}`)
@@ -128,7 +124,7 @@ export const stopRecord = async () => {
     const events = recordData.events
 
     // Make file content
-    let fileContent = `${dayjs(recordData.startTime).format(dateFormat)} ~ ${dayjs(recordData.endTime).format(dateFormat)} \n`
+    let fileContent = `${dayjs(recordData.startTime).format(fileContentDateFormat)} ~ ${dayjs(recordData.endTime).format(fileContentDateFormat)} \n`
     // Parse all events and add it to file contents
     events.map((event) => {
       fileContent += parseEventToStr(event)

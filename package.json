@@ -1,50 +1,38 @@
 {
   "name": "react-ts-vite-electron-bolilerplate",
   "author": "Youngin Kwak",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "main": "./dist/main/main.cjs",
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node scripts/devServer.ts",
     "dev:renderer": "vite packages/renderer",
+    "postinstall": "electron-builder install-app-deps",
     "build": "ts-node scripts/build.ts && electron-builder",
     "release": "ts-node scripts/build.ts && electron-builder --publish=always"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kkan0615/vue3-starter"
-  },
-  "iohook": {
-    "targets": [
-      "node-67",
-      "electron-80"
-    ],
-    "platforms": [
-      "win32",
-      "darwin",
-      "linux"
-    ],
-    "arches": [
-      "x64",
-      "ia32"
-    ]
+    "url": "https://github.com/kkan0615/keyboard-mouse-detector"
   },
   "build": {
-    "appId": "com.my-website.my-frist-electron",
-    "productName": "My-first-electron",
+    "appId": "com.my-website.keyboard-mouse-detector",
+    "productName": "Keyboard mouse detector",
     "copyright": "Copyright © 2022 ${author}",
     "publish": [
       {
         "provider": "github",
         "private": true,
         "owner": "kkan0615",
-        "repo": "vue3-starter"
+        "repo": "keyboard-mouse-detector"
       }
     ],
     "mac": {
+      "icon": "./public/logo/logo_color-128.png",
       "category": "public.app-category.utilities"
     },
     "win": {
+      "icon": "./public/logo/logo_color-256.png",
       "publish": [
         "github"
       ],
@@ -70,10 +58,12 @@
     "dayjs": "^1.11.6",
     "electron-is-dev": "^2.0.0",
     "electron-store": "^8.1.0",
+    "i18next": "^22.0.4",
     "node-gyp-build": "^4.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-i18next": "^12.0.0",
     "react-router": "^6.4.2",
     "react-router-dom": "^6.4.2",
     "sass": "^1.56.0",
@@ -91,7 +81,7 @@
     "autoprefixer": "^10.4.12",
     "cross-env": "^7.0.3",
     "electron": "^19.0.4",
-    "electron-builder": "^23.0.3",
+    "electron-builder": "^23.6.0",
     "electron-rebuild": "^3.2.9",
     "eslint": "8.22.0",
     "eslint-config-google": "^0.14.0",

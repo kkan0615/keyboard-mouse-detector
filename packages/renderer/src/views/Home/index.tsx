@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
 // import './index.scss'
-import { Icon } from '@iconify/react'
 import { useElectron } from '@/hooks/electron'
-import { hookEvents, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
+import { ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
 import { IpcRendererEvent } from 'electron'
 import { RecordData, RecordStatus } from '@/types/record'
 import Header from '@/views/Home/components/Header'
@@ -11,8 +10,8 @@ import EventList from '@/views/Home/components/EventList'
 import StartBtn from '@/views/Home/components/StartBtn'
 import PauseBtn from '@/views/Home/components/PauseBtn'
 import StopBtn from '@/views/Home/components/StopBtn'
+import { rangeDateFormat } from '@/types/date'
 
-const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
 const Home = () => {
   const electron = useElectron()
@@ -26,21 +25,19 @@ const Home = () => {
   const [ events, setEvents ] = useState<(ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent)[]>([])
   // Passed seconds
   const [ seconds, setSeconds ] = useState(0)
-  // Timer
-  const [ timer, setTimer ] = useState<NodeJS.Timeout | null>(null)
 
   /**
    * Formatted start time
    */
   const formatStartTime = useMemo(() => {
-    return startTime ? dayjs(startTime).format(dateFormat) : ''
+    return startTime ? dayjs(startTime).format(rangeDateFormat) : ''
   }, [ startTime ])
 
   /**
    * Formatted end time
    */
   const formatEndTime = useMemo(() => {
-    return endTime ? dayjs(endTime).format(dateFormat) : ''
+    return endTime ? dayjs(endTime).format(rangeDateFormat) : ''
   }, [ endTime ])
 
   const formattedSeconds = useMemo(() => {
@@ -175,42 +172,58 @@ const Home = () => {
       </div>
       { /* Controller */ }
       <div
-        className="tw-grow tw-flex tw-flex-col tw-h-full tw-items-center tw-justify-center tw-w-full"
+        className="tw-grow tw-flex tw-flex-col tw-space-y-2 tw-h-full tw-items-center tw-justify-center tw-w-full"
       >
         <div
           className="tw-w-full tw-shrink tw-text-center"
         >
-          { status === 'IDLE' ?
-            <StartBtn onClick={ startRecord } />: null
-          }
-          { status === 'RUNNING' ?
-            <PauseBtn onClick={ pauseRecord } /> : null
-          }
-          { status === 'PAUSE' ?
-            <StartBtn onClick={ restartRecord } />: null
-          }
-          { (status === 'RUNNING' || status === 'PAUSE') ?
-            <StopBtn onClick={ stopRecord } /> : null
-          }
           <div>
-            <div>
-              { formatStartTime }
-            </div>
-            <div>
-              { formatEndTime ? '~' : null }
-            </div>
-            <div>
-              { formatEndTime }
-            </div>
-
+            { status === 'IDLE' ?
+              <StartBtn onClick={ startRecord } />: null
+            }
             { status === 'RUNNING' ?
-              <div>
-                { formattedSeconds }
+              <PauseBtn onClick={ pauseRecord } /> : null
+            }
+            { status === 'PAUSE' ?
+              <StartBtn onClick={ restartRecord } />: null
+            }
+            { (status === 'RUNNING' || status === 'PAUSE') ?
+              <StopBtn onClick={ stopRecord } /> : null
+            }
+          </div>
+          {
+            formatStartTime ?
+              <div
+                className="tw-mt-2 tw-bg-primary tw-rounded tw-inline-flex tw-space-x-2 tw-px-2 tw-py-1 tw-text-white"
+              >
+                <span
+                >
+                  { formatStartTime }
+                </span>
+                { formatEndTime ?
+                  <span>
+                      ~
+                  </span> :
+                  null
+                }
+                {
+                  formatEndTime ?
+                    <span>
+                      { formatEndTime }
+                    </span> :
+                    null
+                }
               </div> :
               null
-            }
-
-          </div>
+          }
+          { status === 'RUNNING' ?
+            <div
+              className="tw-text-xl tw-font-bold"
+            >
+              { formattedSeconds }
+            </div> :
+            null
+          }
         </div>
         <div
           className="tw-grow tw-h-1 tw-w-full tw-overflow-auto"

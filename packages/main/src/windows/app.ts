@@ -8,9 +8,11 @@ export const createAppWindow = async () => {
   // Create the browser window.
   appWindow = new BrowserWindow({
     autoHideMenuBar: true,
-    width: 1280, // Change to 400 px
-    height: 720,
+    width: isDev ? 1280 : 450, // 1280 for testing
+    height: 750,
     useContentSize: true,
+    resizable: false,
+    icon: path.join(__dirname, '../../public/logo/logo_color-256.png'),
     webPreferences: {
       spellcheck: false,
       nodeIntegration: false,
