@@ -7,38 +7,24 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development ts-node scripts/devServer.ts",
     "dev:renderer": "vite packages/renderer",
+    "postinstall": "electron-builder install-app-deps",
     "build": "ts-node scripts/build.ts && electron-builder",
     "release": "ts-node scripts/build.ts && electron-builder --publish=always"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kkan0615/vue3-starter"
-  },
-  "iohook": {
-    "targets": [
-      "node-67",
-      "electron-80"
-    ],
-    "platforms": [
-      "win32",
-      "darwin",
-      "linux"
-    ],
-    "arches": [
-      "x64",
-      "ia32"
-    ]
+    "url": "https://github.com/kkan0615/keyboard-mouse-detector"
   },
   "build": {
-    "appId": "com.my-website.my-frist-electron",
-    "productName": "My-first-electron",
+    "appId": "com.my-website.keyboard-mouse-detector",
+    "productName": "Keyboard-mouse-detector",
     "copyright": "Copyright © 2022 ${author}",
     "publish": [
       {
         "provider": "github",
         "private": true,
         "owner": "kkan0615",
-        "repo": "vue3-starter"
+        "repo": "keyboard-mouse-detector"
       }
     ],
     "mac": {
@@ -49,13 +35,17 @@
         "github"
       ],
       "target": [
-        "zip",
-        "nsis"
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
       ]
     },
     "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "deleteAppDataOnUninstall": true
     },
     "files": [
       "dist/**/*"
@@ -93,7 +83,7 @@
     "autoprefixer": "^10.4.12",
     "cross-env": "^7.0.3",
     "electron": "^19.0.4",
-    "electron-builder": "^23.0.3",
+    "electron-builder": "^23.6.0",
     "electron-rebuild": "^3.2.9",
     "eslint": "8.22.0",
     "eslint-config-google": "^0.14.0",
