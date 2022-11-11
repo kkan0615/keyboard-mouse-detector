@@ -6,11 +6,7 @@ import fsp from 'fs/promises'
 import { initIoHookListeners } from '../listenrers/iohooks'
 import { EventType, uIOhook } from 'uiohook-napi'
 import { MouseButtonOutput, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '../types/hookEvent'
-
-// Dayjs format for file name
-const fileNameDateFormat = 'YYYY-MM-DD-HH-mm-ss'
-// dayjs format for file content
-const dateFormat = 'MMM D YYYY, h:mm:ss a'
+import { fileContentDateFormat, fileNameDateFormat } from '../types/date'
 
 /**
  * Parse event and return string
@@ -20,7 +16,7 @@ const dateFormat = 'MMM D YYYY, h:mm:ss a'
 export const parseEventToStr = (event: ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent) => {
   const row: string[] = []
   // Add time stamp
-  row.push(`${dayjs(event.time).format(dateFormat)}`)
+  row.push(`${dayjs(event.time).format(fileContentDateFormat)}`)
   switch (event.type) {
     case EventType.EVENT_KEY_PRESSED:
     case EventType.EVENT_KEY_RELEASED:
@@ -128,7 +124,7 @@ export const stopRecord = async () => {
     const events = recordData.events
 
     // Make file content
-    let fileContent = `${dayjs(recordData.startTime).format(dateFormat)} ~ ${dayjs(recordData.endTime).format(dateFormat)} \n`
+    let fileContent = `${dayjs(recordData.startTime).format(fileContentDateFormat)} ~ ${dayjs(recordData.endTime).format(fileContentDateFormat)} \n`
     // Parse all events and add it to file contents
     events.map((event) => {
       fileContent += parseEventToStr(event)

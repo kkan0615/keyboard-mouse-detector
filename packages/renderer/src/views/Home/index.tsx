@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import dayjs from 'dayjs'
 // import './index.scss'
-import { Icon } from '@iconify/react'
 import { useElectron } from '@/hooks/electron'
-import { hookEvents, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
+import { ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '@/types/hookEvent'
 import { IpcRendererEvent } from 'electron'
 import { RecordData, RecordStatus } from '@/types/record'
 import Header from '@/views/Home/components/Header'
@@ -11,8 +10,8 @@ import EventList from '@/views/Home/components/EventList'
 import StartBtn from '@/views/Home/components/StartBtn'
 import PauseBtn from '@/views/Home/components/PauseBtn'
 import StopBtn from '@/views/Home/components/StopBtn'
+import { rangeDateFormat } from '@/types/date'
 
-const dateFormat = 'MMM D YYYY, h:mm:ss a'
 
 const Home = () => {
   const electron = useElectron()
@@ -26,21 +25,19 @@ const Home = () => {
   const [ events, setEvents ] = useState<(ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent)[]>([])
   // Passed seconds
   const [ seconds, setSeconds ] = useState(0)
-  // Timer
-  const [ timer, setTimer ] = useState<NodeJS.Timeout | null>(null)
 
   /**
    * Formatted start time
    */
   const formatStartTime = useMemo(() => {
-    return startTime ? dayjs(startTime).format(dateFormat) : ''
+    return startTime ? dayjs(startTime).format(rangeDateFormat) : ''
   }, [ startTime ])
 
   /**
    * Formatted end time
    */
   const formatEndTime = useMemo(() => {
-    return endTime ? dayjs(endTime).format(dateFormat) : ''
+    return endTime ? dayjs(endTime).format(rangeDateFormat) : ''
   }, [ endTime ])
 
   const formattedSeconds = useMemo(() => {

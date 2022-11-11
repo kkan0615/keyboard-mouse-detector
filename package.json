@@ -1,7 +1,7 @@
 {
   "name": "react-ts-vite-electron-bolilerplate",
   "author": "Youngin Kwak",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "main": "./dist/main/main.cjs",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "build": {
     "appId": "com.my-website.keyboard-mouse-detector",
-    "productName": "Keyboard-mouse-detector",
+    "productName": "Keyboard mouse detector",
     "copyright": "Copyright © 2022 ${author}",
     "publish": [
       {
@@ -28,24 +28,22 @@
       }
     ],
     "mac": {
+      "icon": "./public/logo/logo_color-128.png",
       "category": "public.app-category.utilities"
     },
     "win": {
+      "icon": "./public/logo/logo_color-256.png",
       "publish": [
         "github"
       ],
       "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
+        "zip",
+        "nsis"
       ]
     },
     "nsis": {
-      "deleteAppDataOnUninstall": true
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     },
     "files": [
       "dist/**/*"

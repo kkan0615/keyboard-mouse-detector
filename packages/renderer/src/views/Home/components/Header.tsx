@@ -1,5 +1,4 @@
 import Setting from '@/views/Home/components/Setting'
-import { DarkModeBtn } from '@/components/DarkModeBtn'
 import { LanguageSelect } from '@/components/commons/LanguageSelect'
 
 const Header = () => {
@@ -14,7 +13,8 @@ const Header = () => {
         className="tw-flex tw-items-center tw-space-x-2"
       >
         <LanguageSelect />
-        <DarkModeBtn />
+        { /* Darkmode is not currently supported */ }
+        { /* <DarkModeBtn />*/ }
         <Setting />
       </div>
     </div>

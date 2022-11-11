@@ -19,6 +19,16 @@ Detect Mouse, Keyboard or Wheel events!
 | MOUSE_MOVED    | When mouse is moved    |
 | MOUSE_WHEEL    | When wheel is worked   |
 
+# Developing
+This section is for people who want to contribute to this app <br>
+If you are not interested in contribution, pass this section.
+## Known issue
+- Use "yarn" for package manager. "pnpm has issue with native dependencies"
+
+# Feature we might add
+- Dark mode
+- More languages
+
 # Support me
 Thank you for supporting me! <br>
 
