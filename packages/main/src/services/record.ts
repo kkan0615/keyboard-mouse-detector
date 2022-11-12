@@ -7,6 +7,7 @@ import { initIoHookListeners } from '../listenrers/iohooks'
 import { EventType, uIOhook } from 'uiohook-napi'
 import { MouseButtonOutput, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from '../types/hookEvent'
 import { fileContentDateFormat, fileNameDateFormat } from '../types/date'
+import { secondsToTime } from '../utils/time'
 
 /**
  * Parse event and return string
@@ -123,8 +124,16 @@ export const stopRecord = async () => {
       `${dayjs(recordData.startTime).format(fileNameDateFormat)} ~ ${dayjs(recordData.endTime).format(fileNameDateFormat)}`
     const events = recordData.events
 
-    // Make file content
-    let fileContent = `${dayjs(recordData.startTime).format(fileContentDateFormat)} ~ ${dayjs(recordData.endTime).format(fileContentDateFormat)} \n`
+    // Make file content and set the time range
+    let fileContent = `${dayjs(recordData.startTime).format(fileContentDateFormat)} ~ ${dayjs(recordData.endTime).format(fileContentDateFormat)} `
+    // Add during time as hh:mm:ss format
+    const time = secondsToTime(recordData.seconds)
+    fileContent += `During: ${time.h}:${time.m}:${time.s}`
+    // Add enter
+    fileContent += '\n'
+    // Add Line break
+    fileContent += '----------------------------------------------------------------------------------------------'
+    fileContent += '\n'
     // Parse all events and add it to file contents
     events.map((event) => {
       fileContent += parseEventToStr(event)
