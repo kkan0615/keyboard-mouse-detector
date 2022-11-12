@@ -34,12 +34,4 @@ Thank you for supporting me! <br>
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/youngjinkwak)
 
-[//]: # (# Todo)
-[//]: # (## 진행 중이던거)
-[//]: # (- DARK MODE)
-[//]: # (- Setting Dialog 끝내기)
-[//]: # ()
 [//]: # (## 옮겨야 할것)
-[//]: # (- Dark mode)
-[//]: # (  - Payload)
-[//]: # (  - Electron hook)

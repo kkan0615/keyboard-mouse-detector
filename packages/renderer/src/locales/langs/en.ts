@@ -50,15 +50,10 @@ export const enDictionary = {
       total: 'total',
       attachment: 'attachment',
       comment: 'comment',
-      information: 'information',
-      overview: 'overview',
     },
     placeholders: {
       noData: 'no data',
     },
-    labels: {
-      action: 'action',
-    }
   },
   types: {
   },

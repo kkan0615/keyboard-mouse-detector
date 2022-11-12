@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import { UiohookKeyboardEvent, UiohookMouseEvent, UiohookWheelEvent } from 'uiohook-napi'
 import { iohookValue, ResHookKeyboardEvent, ResHookMouseEvent, ResHookWheelEvent } from './hookEvent'
+import internal from 'stream'
 
 /**
  * Parse event data factory
@@ -43,6 +44,21 @@ export class Record {
   private endTime = ''
   private status: 'IDLE' | 'RUNNING' | 'PAUSE' = 'IDLE'
   private events: (ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent)[] = []
+  private seconds = 0
+  private timer: NodeJS.Timer | null = null
+
+  private startTimer = () => {
+    this.timer = setInterval(() => {
+      this.seconds++
+    }, 1000)
+  }
+
+  private stopTimer = () => {
+    if (this.timer) {
+      clearInterval(this.timer)
+      this.timer = null
+    }
+  }
 
   /**
    * Start to record
@@ -52,6 +68,7 @@ export class Record {
       this.reset()
       this.startTime = dayjs().toISOString()
       this.status = 'RUNNING'
+      this.startTimer()
     }
   }
 
@@ -63,6 +80,7 @@ export class Record {
     if (this.status === 'RUNNING') {
       this.endTime = dayjs().toISOString()
       this.status = 'PAUSE'
+      this.stopTimer()
     }
   }
 
@@ -73,6 +91,7 @@ export class Record {
     if (this.status === 'PAUSE') {
       this.endTime = ''
       this.status = 'RUNNING'
+      this.startTimer()
     }
   }
 
@@ -83,6 +102,7 @@ export class Record {
     if (this.status === 'PAUSE' || this.status === 'RUNNING') {
       this.endTime = dayjs().toISOString()
       this.status = 'IDLE'
+      this.stopTimer()
     }
   }
 
@@ -121,13 +141,15 @@ export class Record {
 
 
   /**
-   *
+   * Reset record data
    */
   public reset() {
     this.startTime = ''
     this.endTime = ''
     this.events = []
     this.status = 'IDLE'
+    this.seconds = 0
+    this.stopTimer()
   }
 
   /**
@@ -135,6 +157,7 @@ export class Record {
    *     startTime - start record time IOS string
    *     endTime - end record time IOS string
    *     status - current record status
+   *     seconds - running seconds
    * }
    */
   public toJson() {
@@ -143,6 +166,7 @@ export class Record {
       endTime: this.endTime,
       status: this.status,
       events: this.events,
+      seconds: this.seconds,
     }
   }
 }
