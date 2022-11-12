@@ -2,6 +2,13 @@
 Detect Mouse, Keyboard or Wheel events!
 
 # Screenshots
+Screenshots are based on v0.0.3.
+## Home
+![home](screenshots/home.png)
+## Setting
+![home](screenshots/setting.png)
+## output
+![home](screenshots/output.png)
 
 # Supporting Languages
 - English
