@@ -12,7 +12,6 @@ import PauseBtn from '@/views/Home/components/PauseBtn'
 import StopBtn from '@/views/Home/components/StopBtn'
 import { rangeDateFormat } from '@/types/date'
 
-
 const Home = () => {
   const electron = useElectron()
   // Start time
@@ -25,6 +24,7 @@ const Home = () => {
   const [ events, setEvents ] = useState<(ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent)[]>([])
   // Passed seconds
   const [ seconds, setSeconds ] = useState(0)
+  const [ saveLoading, setSaveLoading ] = useState(false)
 
   /**
    * Formatted start time
@@ -150,11 +150,13 @@ const Home = () => {
     electron.send('pause-record')
   }
 
-  const stopRecord = () => {
+  const stopRecord = async () => {
     const currentTime = dayjs().toISOString()
     setEndTime(currentTime)
     setStatus('IDLE')
-    electron.send('stop-record')
+    setSaveLoading(true)
+    await electron.invoke('stop-record')
+    setSaveLoading(false)
   }
 
   const addEvent = (event: ResHookKeyboardEvent | ResHookMouseEvent | ResHookWheelEvent) => {
@@ -188,7 +190,10 @@ const Home = () => {
               <StartBtn onClick={ restartRecord } />: null
             }
             { (status === 'RUNNING' || status === 'PAUSE') ?
-              <StopBtn onClick={ stopRecord } /> : null
+              <StopBtn
+                loading={ saveLoading }
+                onClick={ stopRecord }
+              /> : null
             }
           </div>
           {

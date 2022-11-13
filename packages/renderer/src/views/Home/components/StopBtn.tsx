@@ -1,10 +1,12 @@
 import { useTranslation } from 'react-i18next'
+import { Icon } from '@iconify/react'
 
 interface Props {
+  loading: boolean
   onClick: () => void
 }
 
-const StopBtn = ({ onClick }: Props) => {
+const StopBtn = ({ loading, onClick }: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -16,7 +18,13 @@ const StopBtn = ({ onClick }: Props) => {
       tw-rounded-full
       tw-uppercase"
     >
-      { t('commons.buttons.stop') }
+      { loading ?
+        <Icon
+          className="tw-w-full tw-h-full"
+          icon="line-md:loading-twotone-loop"
+        /> :
+        t('commons.buttons.stop')
+      }
     </button>
   )
 }
