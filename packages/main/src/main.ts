@@ -1,4 +1,3 @@
-// packages/main/src/index.ts
 import { app } from 'electron'
 import { createAppWindow } from './windows/app'
 import { uIOhook } from 'uiohook-napi'
@@ -6,6 +5,7 @@ import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/LocalizedFormat'
 import { initIpcMain } from './listenrers'
 import { createTray, destroyTray, tray } from './windows/tray'
+import './utils/autoUpdete'
 
 const isSingleInstance = app.requestSingleInstanceLock()
 

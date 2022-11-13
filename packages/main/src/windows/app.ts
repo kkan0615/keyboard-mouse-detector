@@ -22,6 +22,8 @@ export const createAppWindow = async () => {
       preload: path.join(__dirname, '../preload/index.cjs'),
     },
   })
+  // When it's close, window object should be changed to "undefined"
+  appWindow.on('close', destroyAppWindow)
 
   const pageUrl = isDev ?
     process.env['VITE_DEV_SERVER_URL'] || 'http://localhost:5173' :
@@ -33,10 +35,6 @@ export const createAppWindow = async () => {
   }
 
   await appWindow.loadURL(pageUrl)
-
-  appWindow.on('close', () => {
-    destroyAppWindow()
-  })
 }
 
 export const destroyAppWindow = async () => {

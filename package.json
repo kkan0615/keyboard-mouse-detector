@@ -58,6 +58,7 @@
     "dayjs": "^1.11.6",
     "electron-is-dev": "^2.0.0",
     "electron-store": "^8.1.0",
+    "electron-updater": "^5.3.0",
     "i18next": "^22.0.4",
     "node-gyp-build": "^4.5.0",
     "react": "^18.2.0",
