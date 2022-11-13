@@ -8,7 +8,7 @@ export const initIpcMain = () => {
   ipcMain.on('start-record', startRecord)
   ipcMain.on('pause-record', pauseRecord)
   ipcMain.on('restart-record', restartRecord)
-  ipcMain.on('stop-record', stopRecord)
+  ipcMain.handle('stop-record', stopRecord)
 
   ipcMain.handle('get-record-setting', (event) => {
     // Get setting from electron store
