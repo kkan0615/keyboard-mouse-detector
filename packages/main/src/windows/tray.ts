@@ -5,7 +5,8 @@ import { appWindow, createAppWindow, destroyAppWindow } from './app'
 export let tray: Tray | null = null
 
 export const createTray = async () => {
-  tray = new Tray(path.join(__dirname, '../../public/logo/logo_color-256.png'))
+  tray = new Tray(app.isPackaged ? path.join(process.resourcesPath,
+    'public/logo/logo_color-256.png') : path.join(__dirname, '../../public/logo/logo_color-256.png'))
   // Context menu items
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Open', type: 'normal', click: async () => {
