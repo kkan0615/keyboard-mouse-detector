@@ -19,9 +19,11 @@ export const koDictionary = {
       copyURL: 'URL 복사',
       open: '열기',
       change: '변경',
-      stop: '중지'
+      stop: '중지',
+      update: '업데이트',
+      checkForUpdate: '앱 업데이트 확인',
     },
-    Messages: {
+    messages: {
       cancelSave: 'Would you like to cancel save?',
       saved: 'Success to saved',
       saveFailed: 'Fail to save',
@@ -30,6 +32,7 @@ export const koDictionary = {
       noImg: 'No Image',
       notMatched: 'It is not matched',
       noData: 'no data',
+      latestVersion: '최신 버전입니다.',
       Validations: {
         required: '{field} field is required',
         lengthMin: '{length} is minimum',
@@ -50,6 +53,7 @@ export const koDictionary = {
       total: '총',
       attachment: '첨부파일',
       comment: '댓글',
+      version: '버전'
     },
     placeholders: {
       noData: '데이터 없음',

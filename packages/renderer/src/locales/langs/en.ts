@@ -19,9 +19,11 @@ export const enDictionary = {
       copyURL: 'copy URL',
       open: 'open',
       change: 'change',
-      stop: 'stop'
+      stop: 'stop',
+      update: 'update',
+      checkForUpdate: 'Check for update',
     },
-    Messages: {
+    messages: {
       cancelSave: 'Would you like to cancel save?',
       saved: 'Success to saved',
       saveFailed: 'Fail to save',
@@ -30,6 +32,7 @@ export const enDictionary = {
       noImg: 'No Image',
       notMatched: 'It is not matched',
       noData: 'no data',
+      latestVersion: 'latest version',
       Validations: {
         required: '{field} field is required',
         lengthMin: '{length} is minimum',
@@ -50,6 +53,7 @@ export const enDictionary = {
       total: 'total',
       attachment: 'attachment',
       comment: 'comment',
+      version: 'version'
     },
     placeholders: {
       noData: 'no data',
@@ -63,7 +67,7 @@ export const enDictionary = {
       setting: {
         title: 'setting',
         downloadPath: 'download path',
-        events: 'Events',
+        events: 'events',
         eventsSubMsg: 'Check the events you want to listen',
       }
     },

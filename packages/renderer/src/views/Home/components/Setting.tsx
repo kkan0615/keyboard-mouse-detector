@@ -11,6 +11,7 @@ import { CDialogHeader } from '@/components/Dialog/components/Header'
 import { CDialogContent } from '@/components/Dialog/components/Content'
 import { CDialogAction } from '@/components/Dialog/components/Action'
 import { useTranslation } from 'react-i18next'
+import { AutoUpdater } from '@/components/AutoUpdater'
 
 const Setting = () => {
   const { t } = useTranslation()
@@ -155,7 +156,17 @@ const Setting = () => {
                 className="tw-mb-4"
               >
                 <div
-                  className="tw-text-xl"
+                  className="tw-text-xl tw-capitalize"
+                >
+                  { t('commons.titles.version') }
+                </div>
+                <AutoUpdater />
+              </div>
+              <div
+                className="tw-mb-4"
+              >
+                <div
+                  className="tw-text-xl tw-capitalize"
                 >
                   { t('pages.home.setting.downloadPath') }
                 </div>
@@ -186,7 +197,7 @@ const Setting = () => {
                 className="tw-mb-2"
               >
                 <div
-                  className="tw-text-xl"
+                  className="tw-text-xl tw-capitalize"
                 >
                   { t('pages.home.setting.events') }
                 </div>
@@ -235,9 +246,7 @@ const Setting = () => {
               </div>
             </>
           </CDialogContent>
-
-          <CDialogAction
-          >
+          <CDialogAction>
             <>
               <div
                 className="tw-ml-auto"

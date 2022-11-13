@@ -1,5 +1,9 @@
-# React + Electron + vite 3.0
+# Keyboard mouse detector
 Detect Mouse, Keyboard or Wheel events!
+
+## How to use it?
+### Exit
+Pres "Exit" menu in the tray
 
 # Screenshots
 Screenshots are based on v0.0.3.

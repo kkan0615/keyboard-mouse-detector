@@ -19,6 +19,9 @@ export default defineConfig({
       external: [ ...builtinModules.flatMap((p) => [ p, `node:${p}` ]) ],
     },
   },
+  define: {
+    APP_VERSION: JSON.stringify(process.env.npm_package_version),
+  },
   resolve: {
     alias: [ {
       find: '@',
