@@ -33,4 +33,15 @@ export const createAppWindow = async () => {
   }
 
   await appWindow.loadURL(pageUrl)
+
+  appWindow.on('close', () => {
+    destroyAppWindow()
+  })
+}
+
+export const destroyAppWindow = async () => {
+  if (appWindow) {
+    appWindow.destroy()
+    appWindow = undefined
+  }
 }

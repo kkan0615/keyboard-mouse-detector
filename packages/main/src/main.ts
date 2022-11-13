@@ -1,11 +1,11 @@
 // packages/main/src/index.ts
-import { app, dialog } from 'electron'
+import { app } from 'electron'
 import { createAppWindow } from './windows/app'
 import { uIOhook } from 'uiohook-napi'
 import dayjs from 'dayjs'
 import LocalizedFormat from 'dayjs/plugin/LocalizedFormat'
 import { initIpcMain } from './listenrers'
-
+import { createTray, destroyTray, tray } from './windows/tray'
 
 const isSingleInstance = app.requestSingleInstanceLock()
 
@@ -14,14 +14,9 @@ if (!isSingleInstance) {
   process.exit(0)
 }
 
-app.on('second-instance', () => {
-  createAppWindow().catch((err) =>
-    console.error('Error while trying to prevent second-instance Electron event:', err)
-  )
-})
-
+// Only can close with tray
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (process.platform !== 'darwin' && !tray) {
     app.quit()
   }
 })
@@ -32,8 +27,9 @@ app.on('activate', () => {
   )
 })
 
-app.on('before-quit', () => {
+app.on('before-quit', async () => {
   uIOhook.stop()
+  await destroyTray()
 })
 
 app
@@ -42,7 +38,7 @@ app
     // Add Localized formats to dayjs
     dayjs.extend(LocalizedFormat)
     initIpcMain()
-
+    await createTray()
     await createAppWindow()
   })
   .catch((e) => console.error('Failed to create window:', e))
